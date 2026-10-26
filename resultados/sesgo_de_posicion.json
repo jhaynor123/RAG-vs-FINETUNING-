@@ -1,0 +1,6 @@
+{
+  "n_muestra": 20,
+  "pct_preferencia_estable_ante_cambio_de_orden": 85.0,
+  "desfase_por_posicion_pct": 15.0,
+  "dentro_del_umbral": false
+}

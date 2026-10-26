@@ -1,0 +1,30 @@
+# Dependencias solo de la Ruta B (Fine-Tuning QLoRA con Unsloth).
+# Requiere GPU. El modelo del estudio se entrenó en una AMD RX 9070 XT (16 GB)
+# con ROCm 7.2 sobre WSL2 (Ubuntu 24.04); no se usa en Windows directamente.
+#
+# Pasos previos, en orden:
+#
+# 1) Instalar el driver y ROCm siguiendo la guía de AMD para la distribución:
+#    https://rocm.docs.amd.com/projects/install-on-linux/en/latest/
+#    Comprobar con:  rocminfo  y  rocm-smi
+#    En WSL2, antes de usar la GPU:  export HSA_ENABLE_DXG_DETECTION=1
+#
+# 2) Instalar PyTorch con soporte ROCm (no el paquete de pypi.org, que trae CUDA):
+#    pip install torch --index-url https://download.pytorch.org/whl/rocm7.2
+#
+# 3) bitsandbytes: las versiones estables hasta 0.49.2 producen NaN en la
+#    decodificación de 4 bits en GPUs AMD. Se usó una compilación de desarrollo:
+#    pip install bitsandbytes==0.50.3.dev0   (o una estable más nueva que lo corrija)
+#
+# 4) El resto, con las versiones usadas en el entrenamiento:
+
+unsloth==2026.9.2
+transformers==5.5.0
+peft==0.20.0
+trl==0.24.0
+accelerate==1.14.0
+datasets==4.3.0
+xformers==0.35.0
+
+# Antes del entrenamiento completo conviene una corrida corta para descartar NaN:
+#   python src/fase3_ruta_finetuning/train_qlora.py --max_steps 20

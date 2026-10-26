@@ -1,0 +1,18 @@
+{
+  "modelo": "claude-sonnet-5-5",
+  "chunks_procesados": 288,
+  "chunks_sin_pares_utiles": 19,
+  "chunks_fallidos": 0,
+  "pares_eliminados_por_igualar_un_caso_de_prueba": 0,
+  "pares_finales": 807,
+  "pares_por_subset": {
+    "A": 507,
+    "B": 300
+  },
+  "llamadas": 314,
+  "tokens_entrada": 289852,
+  "tokens_salida": 258089,
+  "costo_usd": 3.1606,
+  "chunks_fallidos_detalle": [],
+  "nota": "Incluye un segundo pase de 8 chunks que se truncaron en el primero (max_tokens 1536 -> 4096)."
+}

@@ -1,0 +1,378 @@
+{
+  "tabla_rendimiento": [
+    {
+      "configuracion": "RAG_GPT",
+      "dominio": "Lenguaje natural",
+      "n": 100,
+      "faithfulness": 0.5649,
+      "answer_correctness": 0.3126,
+      "answer_relevance": 0.6297,
+      "tasa_alucinacion_pct": 35.0
+    },
+    {
+      "configuracion": "RAG_GPT",
+      "dominio": "Semiestructurado",
+      "n": 100,
+      "faithfulness": 0.9752,
+      "answer_correctness": 0.9829,
+      "answer_relevance": 0.2992,
+      "tasa_alucinacion_pct": 0.0
+    },
+    {
+      "configuracion": "RAG_Claude",
+      "dominio": "Lenguaje natural",
+      "n": 100,
+      "faithfulness": 0.5187,
+      "answer_correctness": 0.2461,
+      "answer_relevance": 0.6306,
+      "tasa_alucinacion_pct": 43.0
+    },
+    {
+      "configuracion": "RAG_Claude",
+      "dominio": "Semiestructurado",
+      "n": 100,
+      "faithfulness": 0.7895,
+      "answer_correctness": 0.7285,
+      "answer_relevance": 0.529,
+      "tasa_alucinacion_pct": 7.0
+    },
+    {
+      "configuracion": "RAG_Gemini",
+      "dominio": "Lenguaje natural",
+      "n": 100,
+      "faithfulness": 0.6117,
+      "answer_correctness": 0.3076,
+      "answer_relevance": 0.5636,
+      "tasa_alucinacion_pct": 35.0
+    },
+    {
+      "configuracion": "RAG_Gemini",
+      "dominio": "Semiestructurado",
+      "n": 100,
+      "faithfulness": 0.9993,
+      "answer_correctness": 1.0,
+      "answer_relevance": 0.2685,
+      "tasa_alucinacion_pct": 0.0
+    },
+    {
+      "configuracion": "FT_Qwen",
+      "dominio": "Lenguaje natural",
+      "n": 100,
+      "faithfulness": 0.1452,
+      "answer_correctness": 0.1392,
+      "answer_relevance": 0.5759,
+      "tasa_alucinacion_pct": 91.0
+    },
+    {
+      "configuracion": "FT_Qwen",
+      "dominio": "Semiestructurado",
+      "n": 100,
+      "faithfulness": 0.1625,
+      "answer_correctness": 0.16,
+      "answer_relevance": 0.1067,
+      "tasa_alucinacion_pct": 90.0
+    }
+  ],
+  "contraste_rag_vs_finetuning": [
+    {
+      "dominio": "Lenguaje natural",
+      "metrica": "Faithfulness",
+      "n_casos_pareados": 100,
+      "media_RAG": 0.5651,
+      "media_FineTuning": 0.1452,
+      "ganador": "RAG",
+      "p_normalidad_shapiro": 0.0311,
+      "prueba_usada": "Wilcoxon (rangos con signo)",
+      "estadistico": 139.0,
+      "gl": null,
+      "p_valor": 0.0,
+      "significativo_0.05": true,
+      "tamano_efecto": 0.8204,
+      "tipo_efecto": "r"
+    },
+    {
+      "dominio": "Lenguaje natural",
+      "metrica": "Answer Correctness",
+      "n_casos_pareados": 100,
+      "media_RAG": 0.2888,
+      "media_FineTuning": 0.1392,
+      "ganador": "RAG",
+      "p_normalidad_shapiro": 0.0001,
+      "prueba_usada": "Wilcoxon (rangos con signo)",
+      "estadistico": 466.5,
+      "gl": null,
+      "p_valor": 7.5e-05,
+      "significativo_0.05": true,
+      "tamano_efecto": 0.7078,
+      "tipo_efecto": "r"
+    },
+    {
+      "dominio": "Lenguaje natural",
+      "metrica": "Answer Relevance",
+      "n_casos_pareados": 100,
+      "media_RAG": 0.608,
+      "media_FineTuning": 0.5759,
+      "ganador": "RAG",
+      "p_normalidad_shapiro": 0.0528,
+      "prueba_usada": "T-Student pareada",
+      "estadistico": 1.4637,
+      "gl": 99,
+      "p_valor": 0.146453,
+      "significativo_0.05": false,
+      "tamano_efecto": 0.1464,
+      "tipo_efecto": "d de Cohen"
+    },
+    {
+      "dominio": "Semiestructurado",
+      "metrica": "Faithfulness",
+      "n_casos_pareados": 100,
+      "media_RAG": 0.9214,
+      "media_FineTuning": 0.1625,
+      "ganador": "RAG",
+      "p_normalidad_shapiro": 0.0,
+      "prueba_usada": "Wilcoxon (rangos con signo)",
+      "estadistico": 36.0,
+      "gl": null,
+      "p_valor": 0.0,
+      "significativo_0.05": true,
+      "tamano_efecto": 0.8558,
+      "tipo_efecto": "r"
+    },
+    {
+      "dominio": "Semiestructurado",
+      "metrica": "Answer Correctness",
+      "n_casos_pareados": 100,
+      "media_RAG": 0.9038,
+      "media_FineTuning": 0.16,
+      "ganador": "RAG",
+      "p_normalidad_shapiro": 0.0,
+      "prueba_usada": "Wilcoxon (rangos con signo)",
+      "estadistico": 29.0,
+      "gl": null,
+      "p_valor": 0.0,
+      "significativo_0.05": true,
+      "tamano_efecto": 0.8582,
+      "tipo_efecto": "r"
+    },
+    {
+      "dominio": "Semiestructurado",
+      "metrica": "Answer Relevance",
+      "n_casos_pareados": 100,
+      "media_RAG": 0.3656,
+      "media_FineTuning": 0.1067,
+      "ganador": "RAG",
+      "p_normalidad_shapiro": 0.8276,
+      "prueba_usada": "T-Student pareada",
+      "estadistico": 19.1522,
+      "gl": 99,
+      "p_valor": 0.0,
+      "significativo_0.05": true,
+      "tamano_efecto": 1.9152,
+      "tipo_efecto": "d de Cohen"
+    }
+  ],
+  "friedman_ruta_A": [
+    {
+      "metrica": "Faithfulness",
+      "n": 200,
+      "medias": {
+        "RAG_Claude": 0.6541,
+        "RAG_GPT": 0.7701,
+        "RAG_Gemini": 0.8055
+      },
+      "chi2": 122.6518,
+      "gl": 2,
+      "p_valor": 0.0,
+      "W_kendall": 0.3066,
+      "significativo_0.05": true,
+      "comparaciones_por_pares": [
+        {
+          "par": "RAG_Claude vs RAG_GPT",
+          "p_bonferroni": 0.0
+        },
+        {
+          "par": "RAG_Claude vs RAG_Gemini",
+          "p_bonferroni": 0.0
+        },
+        {
+          "par": "RAG_GPT vs RAG_Gemini",
+          "p_bonferroni": 0.008931
+        }
+      ]
+    },
+    {
+      "metrica": "Answer Correctness",
+      "n": 200,
+      "medias": {
+        "RAG_Claude": 0.4873,
+        "RAG_GPT": 0.6477,
+        "RAG_Gemini": 0.6538
+      },
+      "chi2": 189.0863,
+      "gl": 2,
+      "p_valor": 0.0,
+      "W_kendall": 0.4727,
+      "significativo_0.05": true,
+      "comparaciones_por_pares": [
+        {
+          "par": "RAG_Claude vs RAG_GPT",
+          "p_bonferroni": 0.0
+        },
+        {
+          "par": "RAG_Claude vs RAG_Gemini",
+          "p_bonferroni": 0.0
+        },
+        {
+          "par": "RAG_GPT vs RAG_Gemini",
+          "p_bonferroni": 0.212609
+        }
+      ]
+    },
+    {
+      "metrica": "Answer Relevance",
+      "n": 200,
+      "medias": {
+        "RAG_Claude": 0.5798,
+        "RAG_GPT": 0.4644,
+        "RAG_Gemini": 0.4161
+      },
+      "chi2": 26.2123,
+      "gl": 2,
+      "p_valor": 2e-06,
+      "W_kendall": 0.0655,
+      "significativo_0.05": true,
+      "comparaciones_por_pares": [
+        {
+          "par": "RAG_Claude vs RAG_GPT",
+          "p_bonferroni": 0.0
+        },
+        {
+          "par": "RAG_Claude vs RAG_Gemini",
+          "p_bonferroni": 0.0
+        },
+        {
+          "par": "RAG_GPT vs RAG_Gemini",
+          "p_bonferroni": 0.030025
+        }
+      ]
+    }
+  ],
+  "friedman_alucinacion": {
+    "n": 200,
+    "tasas_pct": {
+      "RAG_Claude": 25.0,
+      "RAG_GPT": 17.5,
+      "RAG_Gemini": 17.5,
+      "FT_Qwen": 90.5
+    },
+    "chi2": 350.9301,
+    "gl": 3,
+    "p_valor": 0.0,
+    "W_kendall": 0.5849,
+    "significativo_0.05": true
+  },
+  "desglose_por_generador": [
+    {
+      "dominio": "Lenguaje natural",
+      "ruta": "RAG",
+      "generador": "Claude",
+      "n_casos": 100,
+      "Faithfulness": 0.5187,
+      "Answer Correctness": 0.2461,
+      "Answer Relevance": 0.6306
+    },
+    {
+      "dominio": "Lenguaje natural",
+      "ruta": "RAG",
+      "generador": "GPT",
+      "n_casos": 100,
+      "Faithfulness": 0.5649,
+      "Answer Correctness": 0.3126,
+      "Answer Relevance": 0.6297
+    },
+    {
+      "dominio": "Lenguaje natural",
+      "ruta": "RAG",
+      "generador": "Gemini",
+      "n_casos": 100,
+      "Faithfulness": 0.6117,
+      "Answer Correctness": 0.3076,
+      "Answer Relevance": 0.5636
+    },
+    {
+      "dominio": "Lenguaje natural",
+      "ruta": "FineTuning",
+      "generador": "Qwen",
+      "n_casos": 100,
+      "Faithfulness": 0.1452,
+      "Answer Correctness": 0.1392,
+      "Answer Relevance": 0.5759
+    },
+    {
+      "dominio": "Semiestructurado",
+      "ruta": "RAG",
+      "generador": "Claude",
+      "n_casos": 100,
+      "Faithfulness": 0.7895,
+      "Answer Correctness": 0.7285,
+      "Answer Relevance": 0.529
+    },
+    {
+      "dominio": "Semiestructurado",
+      "ruta": "RAG",
+      "generador": "GPT",
+      "n_casos": 100,
+      "Faithfulness": 0.9752,
+      "Answer Correctness": 0.9829,
+      "Answer Relevance": 0.2992
+    },
+    {
+      "dominio": "Semiestructurado",
+      "ruta": "RAG",
+      "generador": "Gemini",
+      "n_casos": 100,
+      "Faithfulness": 0.9993,
+      "Answer Correctness": 1.0,
+      "Answer Relevance": 0.2685
+    },
+    {
+      "dominio": "Semiestructurado",
+      "ruta": "FineTuning",
+      "generador": "Qwen",
+      "n_casos": 100,
+      "Faithfulness": 0.1625,
+      "Answer Correctness": 0.16,
+      "Answer Relevance": 0.1067
+    }
+  ],
+  "tasa_alucinacion": [
+    {
+      "dominio": "Lenguaje natural",
+      "ruta": "RAG",
+      "n_respuestas": 300,
+      "tasa_alucinacion_pct": 37.67
+    },
+    {
+      "dominio": "Lenguaje natural",
+      "ruta": "FineTuning",
+      "n_respuestas": 100,
+      "tasa_alucinacion_pct": 91.0
+    },
+    {
+      "dominio": "Semiestructurado",
+      "ruta": "RAG",
+      "n_respuestas": 300,
+      "tasa_alucinacion_pct": 2.33
+    },
+    {
+      "dominio": "Semiestructurado",
+      "ruta": "FineTuning",
+      "n_respuestas": 100,
+      "tasa_alucinacion_pct": 90.0
+    }
+  ],
+  "dispersion_juez": {
+    "desviacion_estandar_media_entre_k_repeticiones": 0.026,
+    "dentro_del_umbral_0.05": true
+  }
+}

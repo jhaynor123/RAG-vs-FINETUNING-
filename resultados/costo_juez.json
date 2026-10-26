@@ -1,0 +1,8 @@
+{
+  "llamadas": 7207,
+  "tokens_entrada": 2432074,
+  "tokens_salida": 1637204,
+  "modelo": "deepseek-v4-pro",
+  "costo_usd_tarifa_pico": 9.6937,
+  "nota": "Suma de la corrida principal (799 respuestas) y el reintento de A_0037 (max_tokens 2048 -> 4096)."
+}

@@ -1,0 +1,6 @@
+Paquete de revision. Incluye codigo, resultados agregados, estadistica, costos y figuras.
+No incluye: claves de API (.env), manuales y registros de la planta (data/), el adaptador LoRA (modelos/),
+ni los textos de preguntas y respuestas (juicios_detalle.jsonl, casos_de_prueba.jsonl,
+interacciones.jsonl), que contienen fragmentos de la documentacion de la planta.
+resultados/validacion_usuarios/interacciones_sin_texto.jsonl es el registro de la validacion sin esos textos;
+consolidar_validacion.py lo acepta con --interacciones.

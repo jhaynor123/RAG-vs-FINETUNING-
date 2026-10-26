@@ -1,0 +1,48 @@
+Matriz de rendimiento cargada: 800 filas
+
+=== RAG vs. Fine-Tuning por dominio y métrica (RAG = promedio de sus 3 generadores) ===
+  [Lenguaje natural] Faithfulness: RAG=0.5651 vs FT=0.1452 -> gana RAG | Wilcoxon (rangos con signo), p=0.0 (SIGNIFICATIVO), r=0.8204
+  [Lenguaje natural] Answer Correctness: RAG=0.2888 vs FT=0.1392 -> gana RAG | Wilcoxon (rangos con signo), p=7.5e-05 (SIGNIFICATIVO), r=0.7078
+  [Lenguaje natural] Answer Relevance: RAG=0.608 vs FT=0.5759 -> gana RAG | T-Student pareada, p=0.146453 (no significativo), d de Cohen=0.1464
+  [Semiestructurado] Faithfulness: RAG=0.9214 vs FT=0.1625 -> gana RAG | Wilcoxon (rangos con signo), p=0.0 (SIGNIFICATIVO), r=0.8558
+  [Semiestructurado] Answer Correctness: RAG=0.9038 vs FT=0.16 -> gana RAG | Wilcoxon (rangos con signo), p=0.0 (SIGNIFICATIVO), r=0.8582
+  [Semiestructurado] Answer Relevance: RAG=0.3656 vs FT=0.1067 -> gana RAG | T-Student pareada, p=0.0 (SIGNIFICATIVO), d de Cohen=1.9152
+
+=== Desglose descriptivo por generador (sin pruebas de hipótesis) ===
+  [Lenguaje natural] RAG / Claude: Faithfulness=0.5187, Answer Correctness=0.2461, Answer Relevance=0.6306
+  [Lenguaje natural] RAG / GPT: Faithfulness=0.5649, Answer Correctness=0.3126, Answer Relevance=0.6297
+  [Lenguaje natural] RAG / Gemini: Faithfulness=0.6117, Answer Correctness=0.3076, Answer Relevance=0.5636
+  [Lenguaje natural] FineTuning / Qwen: Faithfulness=0.1452, Answer Correctness=0.1392, Answer Relevance=0.5759
+  [Semiestructurado] RAG / Claude: Faithfulness=0.7895, Answer Correctness=0.7285, Answer Relevance=0.529
+  [Semiestructurado] RAG / GPT: Faithfulness=0.9752, Answer Correctness=0.9829, Answer Relevance=0.2992
+  [Semiestructurado] RAG / Gemini: Faithfulness=0.9993, Answer Correctness=1.0, Answer Relevance=0.2685
+  [Semiestructurado] FineTuning / Qwen: Faithfulness=0.1625, Answer Correctness=0.16, Answer Relevance=0.1067
+
+=== Tasa de alucinación por ruta (Faithfulness < 0.50) ===
+  [Lenguaje natural] RAG: 37.67% (n=300)
+  [Lenguaje natural] FineTuning: 91.0% (n=100)
+  [Semiestructurado] RAG: 2.33% (n=300)
+  [Semiestructurado] FineTuning: 90.0% (n=100)
+
+=== Dispersión del juez entre repeticiones ===
+  {'desviacion_estandar_media_entre_k_repeticiones': 0.026, 'dentro_del_umbral_0.05': True}
+
+=== Rendimiento por configuración y tipo de dato ===
+  RAG_GPT     Lenguaje natural  F=0.5649 AC=0.3126 AR=0.6297 alucinación=35.0%
+  RAG_GPT     Semiestructurado  F=0.9752 AC=0.9829 AR=0.2992 alucinación=0.0%
+  RAG_Claude  Lenguaje natural  F=0.5187 AC=0.2461 AR=0.6306 alucinación=43.0%
+  RAG_Claude  Semiestructurado  F=0.7895 AC=0.7285 AR=0.529 alucinación=7.0%
+  RAG_Gemini  Lenguaje natural  F=0.6117 AC=0.3076 AR=0.5636 alucinación=35.0%
+  RAG_Gemini  Semiestructurado  F=0.9993 AC=1.0 AR=0.2685 alucinación=0.0%
+  FT_Qwen     Lenguaje natural  F=0.1452 AC=0.1392 AR=0.5759 alucinación=91.0%
+  FT_Qwen     Semiestructurado  F=0.1625 AC=0.16 AR=0.1067 alucinación=90.0%
+
+=== Friedman entre los 3 generadores de la Ruta A (por métrica) ===
+  Faithfulness: chi2(2)=122.6518 p=0.0 W=0.3066 medias={'RAG_Claude': 0.6541, 'RAG_GPT': 0.7701, 'RAG_Gemini': 0.8055}
+  Answer Correctness: chi2(2)=189.0863 p=0.0 W=0.4727 medias={'RAG_Claude': 0.4873, 'RAG_GPT': 0.6477, 'RAG_Gemini': 0.6538}
+  Answer Relevance: chi2(2)=26.2123 p=2e-06 W=0.0655 medias={'RAG_Claude': 0.5798, 'RAG_GPT': 0.4644, 'RAG_Gemini': 0.4161}
+
+=== Friedman de la tasa de alucinación entre las 4 configuraciones ===
+  {'n': 200, 'tasas_pct': {'RAG_Claude': 25.0, 'RAG_GPT': 17.5, 'RAG_Gemini': 17.5, 'FT_Qwen': 90.5}, 'chi2': 350.9301, 'gl': 3, 'p_valor': 0.0, 'W_kendall': 0.5849, 'significativo_0.05': True}
+
+Reporte completo guardado en: C:\Users\Equipo\Desktop\sistema-rag-ft\resultados\reporte_estadistico.json

@@ -1,0 +1,116 @@
+{
+  "sintetico": false,
+  "n_participantes": 5,
+  "n_consultas": 75,
+  "por_configuracion": {
+    "RAG_GPT": {
+      "n_respuestas": 75,
+      "coincidencia_pct": 93.3,
+      "confianza": 3.39,
+      "advertencia_info_ausente": 3.53,
+      "tiempo_percibido": 3.49,
+      "tiempo_medido_seg": 4.12,
+      "preferencia_pct_consultas": 14.7
+    },
+    "RAG_Claude": {
+      "n_respuestas": 75,
+      "coincidencia_pct": 94.7,
+      "confianza": 3.48,
+      "advertencia_info_ausente": 3.65,
+      "tiempo_percibido": 3.64,
+      "tiempo_medido_seg": 5.07,
+      "preferencia_pct_consultas": 40.0
+    },
+    "RAG_Gemini": {
+      "n_respuestas": 75,
+      "coincidencia_pct": 93.3,
+      "confianza": 3.35,
+      "advertencia_info_ausente": 3.45,
+      "tiempo_percibido": 3.49,
+      "tiempo_medido_seg": 6.73,
+      "preferencia_pct_consultas": 17.3
+    },
+    "FT_Qwen": {
+      "n_respuestas": 75,
+      "coincidencia_pct": 77.3,
+      "confianza": 3.36,
+      "advertencia_info_ausente": 3.56,
+      "tiempo_percibido": 3.47,
+      "tiempo_medido_seg": 6.28,
+      "preferencia_pct_consultas": 28.0
+    }
+  },
+  "registro_diario": [
+    {
+      "participante": "P1",
+      "estaciones": [
+        "Preparación y ajuste de máquina"
+      ],
+      "dias_con_uso": 1,
+      "por_dia": [
+        15
+      ],
+      "total": 15,
+      "aciertos": 15,
+      "tasa_pct": 100.0
+    },
+    {
+      "participante": "P2",
+      "estaciones": [
+        "Operación en línea y formación de puntada"
+      ],
+      "dias_con_uso": 1,
+      "por_dia": [
+        15
+      ],
+      "total": 15,
+      "aciertos": 15,
+      "tasa_pct": 100.0
+    },
+    {
+      "participante": "P3",
+      "estaciones": [
+        "Mantenimiento y lubricación en línea"
+      ],
+      "dias_con_uso": 1,
+      "por_dia": [
+        15
+      ],
+      "total": 15,
+      "aciertos": 15,
+      "tasa_pct": 100.0
+    },
+    {
+      "participante": "P4",
+      "estaciones": [
+        "Seguridad y control operativo"
+      ],
+      "dias_con_uso": 1,
+      "por_dia": [
+        15
+      ],
+      "total": 15,
+      "aciertos": 15,
+      "tasa_pct": 100.0
+    },
+    {
+      "participante": "P5",
+      "estaciones": [
+        "Supervisión transversal"
+      ],
+      "dias_con_uso": 1,
+      "por_dia": [
+        15
+      ],
+      "total": 15,
+      "aciertos": 15,
+      "tasa_pct": 100.0
+    }
+  ],
+  "parte_A": {
+    "utilidad_percibida": 4,
+    "facilidad_de_uso": 4.2,
+    "intencion_de_uso": 4.3
+  },
+  "n_parte_A": 5
+}

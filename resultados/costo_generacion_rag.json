@@ -1,0 +1,24 @@
+{
+  "claude": {
+    "llamadas": 200,
+    "tokens_entrada": 280473,
+    "tokens_salida": 78150,
+    "modelo": "claude-sonnet-5-5",
+    "costo_usd": 1.3424
+  },
+  "gpt": {
+    "llamadas": 200,
+    "tokens_entrada": 167882,
+    "tokens_salida": 17093,
+    "modelo": "gpt-6.1-sol",
+    "costo_usd": 0.5067
+  },
+  "gemini": {
+    "llamadas": 200,
+    "tokens_entrada": 178441,
+    "tokens_salida": 113179,
+    "modelo": "gemini-3.8-flash",
+    "costo_usd": 0.5583
+  },
+  "total_usd": 2.4074
+}

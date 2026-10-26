@@ -1,0 +1,9 @@
+configuracion,dominio,n,faithfulness,answer_correctness,answer_relevance,tasa_alucinacion_pct
+RAG_GPT,Lenguaje natural,100,0.5649,0.3126,0.6297,35.0
+RAG_GPT,Semiestructurado,100,0.9752,0.9829,0.2992,0.0
+RAG_Claude,Lenguaje natural,100,0.5187,0.2461,0.6306,43.0
+RAG_Claude,Semiestructurado,100,0.7895,0.7285,0.529,7.0
+RAG_Gemini,Lenguaje natural,100,0.6117,0.3076,0.5636,35.0
+RAG_Gemini,Semiestructurado,100,0.9993,1.0,0.2685,0.0
+FT_Qwen,Lenguaje natural,100,0.1452,0.1392,0.5759,91.0
+FT_Qwen,Semiestructurado,100,0.1625,0.16,0.1067,90.0

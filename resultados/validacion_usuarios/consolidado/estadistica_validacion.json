@@ -1,0 +1,100 @@
+{
+ "confianza": {
+  "medias": {
+   "RAG_GPT": 3.39,
+   "RAG_Claude": 3.48,
+   "RAG_Gemini": 3.35,
+   "FT_Qwen": 3.36
+  },
+  "chi2": 3.14,
+  "p": 0.3711573227672052,
+  "W": 0.014,
+  "wilcoxon_RAG_vs_FT": {
+   "p": 0.5234497941476746,
+   "media_RAG": 3.4,
+   "media_FT": 3.36
+  }
+ },
+ "transparencia": {
+  "medias": {
+   "RAG_GPT": 3.53,
+   "RAG_Claude": 3.65,
+   "RAG_Gemini": 3.45,
+   "FT_Qwen": 3.56
+  },
+  "chi2": 3.82,
+  "p": 0.28135607835344106,
+  "W": 0.017,
+  "wilcoxon_RAG_vs_FT": {
+   "p": 0.8930177940233788,
+   "media_RAG": 3.55,
+   "media_FT": 3.56
+  }
+ },
+ "tiempo_percibido": {
+  "medias": {
+   "RAG_GPT": 3.49,
+   "RAG_Claude": 3.64,
+   "RAG_Gemini": 3.49,
+   "FT_Qwen": 3.47
+  },
+  "chi2": 3.13,
+  "p": 0.3723946988663683,
+  "W": 0.014,
+  "wilcoxon_RAG_vs_FT": {
+   "p": 0.47176213488943364,
+   "media_RAG": 3.54,
+   "media_FT": 3.47
+  }
+ },
+ "coincide": {
+  "Q": 20.55,
+  "p": 0.00013039961534802013,
+  "prop": {
+   "RAG_GPT": 0.933,
+   "RAG_Claude": 0.947,
+   "RAG_Gemini": 0.933,
+   "FT_Qwen": 0.773
+  },
+  "discordantes_FTvs_RAG_GPT": [
+   5,
+   17,
+   0.01690053939819336
+  ],
+  "discordantes_FTvs_RAG_Claude": [
+   4,
+   17,
+   0.007197380065917969
+  ],
+  "discordantes_FTvs_RAG_Gemini": [
+   5,
+   17,
+   0.01690053939819336
+  ]
+ },
+ "preferencia": {
+  "conteo": {
+   "RAG_GPT": 11,
+   "RAG_Claude": 30,
+   "RAG_Gemini": 13,
+   "FT_Qwen": 21
+  },
+  "chi2_uniforme": 11.99,
+  "p": 0.0074289747125944085
+ },
+ "alfa_cronbach_n5": {
+  "UP": -2.67,
+  "FU": -3.5,
+  "IU": 0.77
+ },
+ "tiempo_medido": {
+  "medianas": {
+   "RAG_GPT": 4.12,
+   "RAG_Claude": 5.07,
+   "RAG_Gemini": 6.73,
+   "FT_Qwen": 6.28
+  },
+  "chi2": 89.13,
+  "p": 3.37163909368389e-19
+ }
+}
