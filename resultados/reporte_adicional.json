@@ -1,0 +1,941 @@
+{
+ "contrastes": {
+  "rag_vs_ft": [
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Faithfulness",
+    "n": 100,
+    "prueba": "Wilcoxon (rangos con signo)",
+    "estadistico": 139.0,
+    "gl": null,
+    "p": 5.388476686131551e-16,
+    "tamano_efecto": 0.8102,
+    "tipo_efecto": "r",
+    "p_holm": 1.6165430058394654e-15
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Correctness",
+    "n": 100,
+    "prueba": "Wilcoxon (rangos con signo)",
+    "estadistico": 466.5,
+    "gl": null,
+    "p": 7.488944866723571e-05,
+    "tamano_efecto": 0.396,
+    "tipo_efecto": "r",
+    "p_holm": 0.00014977889733447142
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Relevance",
+    "n": 100,
+    "prueba": "T-Student pareada",
+    "estadistico": 1.4637,
+    "gl": 99,
+    "p": 0.14645261156169884,
+    "tamano_efecto": 0.1464,
+    "tipo_efecto": "d de Cohen",
+    "p_holm": 0.14645261156169884
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Faithfulness",
+    "n": 100,
+    "prueba": "Wilcoxon (rangos con signo)",
+    "estadistico": 36.0,
+    "gl": null,
+    "p": 1.6789790851356763e-17,
+    "tamano_efecto": 0.8514,
+    "tipo_efecto": "r",
+    "p_holm": 6.715916340542705e-17
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Correctness",
+    "n": 100,
+    "prueba": "Wilcoxon (rangos con signo)",
+    "estadistico": 29.0,
+    "gl": null,
+    "p": 4.850976623665091e-18,
+    "tamano_efecto": 0.8657,
+    "tipo_efecto": "r",
+    "p_holm": 2.4254883118325456e-17
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Relevance",
+    "n": 100,
+    "prueba": "T-Student pareada",
+    "estadistico": 19.1522,
+    "gl": 99,
+    "p": 4.586669860103042e-35,
+    "tamano_efecto": 1.9152,
+    "tipo_efecto": "d de Cohen",
+    "p_holm": 2.752001916061825e-34
+   }
+  ],
+  "cada_generador_vs_ft": [
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Faithfulness",
+    "generador": "RAG_Claude",
+    "W": 159.0,
+    "p": 1.4735380901409852e-15,
+    "r": 0.7979142139694274,
+    "media_a": 0.5187021619124359,
+    "media_b": 0.14515079365079364
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Faithfulness",
+    "generador": "RAG_GPT",
+    "W": 96.5,
+    "p": 4.115727778687841e-15,
+    "r": 0.7851352982847634,
+    "media_a": 0.5649466089466089,
+    "media_b": 0.14515079365079364
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Faithfulness",
+    "generador": "RAG_Gemini",
+    "W": 179.0,
+    "p": 3.411357142609175e-14,
+    "r": 0.7581669754266445,
+    "media_a": 0.6116679894179895,
+    "media_b": 0.14515079365079364
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Correctness",
+    "generador": "RAG_Claude",
+    "W": 507.5,
+    "p": 0.0010079279271854417,
+    "r": 0.32883044084559787,
+    "media_a": 0.24609218994513113,
+    "media_b": 0.1392340622340622
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Correctness",
+    "generador": "RAG_GPT",
+    "W": 402.0,
+    "p": 1.974337684504715e-05,
+    "r": 0.42677733522382394,
+    "media_a": 0.3125701254083607,
+    "media_b": 0.1392340622340622
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Correctness",
+    "generador": "RAG_Gemini",
+    "W": 410.5,
+    "p": 7.217516916081962e-05,
+    "r": 0.3968999051371665,
+    "media_a": 0.30758961408961405,
+    "media_b": 0.1392340622340622
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Faithfulness",
+    "generador": "RAG_Claude",
+    "W": 69.0,
+    "p": 4.4780379377135795e-17,
+    "r": 0.8399651982748699,
+    "media_a": 0.7895066137566138,
+    "media_b": 0.16249999999999998
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Faithfulness",
+    "generador": "RAG_GPT",
+    "W": 2.0,
+    "p": 5.984844608246723e-18,
+    "r": 0.8632837473158957,
+    "media_a": 0.9752380952380953,
+    "media_b": 0.16249999999999998
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Faithfulness",
+    "generador": "RAG_Gemini",
+    "W": 0.0,
+    "p": 1.926506666101041e-18,
+    "r": 0.8761510822997207,
+    "media_a": 0.9993333333333334,
+    "media_b": 0.16249999999999998
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Correctness",
+    "generador": "RAG_Claude",
+    "W": 75.0,
+    "p": 2.3170470637665292e-17,
+    "r": 0.8476683225922971,
+    "media_a": 0.7285151515151516,
+    "media_b": 0.16003968253968254
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Correctness",
+    "generador": "RAG_GPT",
+    "W": 2.0,
+    "p": 1.6469781802046418e-18,
+    "r": 0.8779161550336998,
+    "media_a": 0.9828571428571429,
+    "media_b": 0.16003968253968254
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Correctness",
+    "generador": "RAG_Gemini",
+    "W": 0.0,
+    "p": 4.2966878179968837e-19,
+    "r": 0.8929053570479635,
+    "media_a": 1.0,
+    "media_b": 0.16003968253968254
+   }
+  ],
+  "max_p_por_generador": 0.0010079279271854417
+ },
+ "interaccion_estrategia_x_tipo_de_dato": {
+  "Faithfulness": {
+   "dif_media_manuales": 0.41995479310821776,
+   "dif_media_registros": 0.7588593474426808,
+   "U": 1815.0,
+   "p": 7.152417886215899e-15,
+   "r_rb": 0.637,
+   "rag_manuales_vs_registros_p": 1.4103184820934747e-24,
+   "ft_manuales_vs_registros_p": 0.15623171212457246
+  },
+  "Answer Correctness": {
+   "dif_media_manuales": 0.14951658091363973,
+   "dif_media_registros": 0.7437510822510823,
+   "U": 1042.0,
+   "p": 2.0648445365865278e-22,
+   "r_rb": 0.7916,
+   "rag_manuales_vs_registros_p": 2.4963455803163117e-34,
+   "ft_manuales_vs_registros_p": 0.5912485434298604
+  },
+  "Answer Relevance": {
+   "dif_media_manuales": 0.03208468573321579,
+   "dif_media_registros": 0.25886668300530025,
+   "U": 1720.0,
+   "p": 1.1185820972262703e-15,
+   "r_rb": 0.656,
+   "rag_manuales_vs_registros_p": 1.39445592028227e-20,
+   "ft_manuales_vs_registros_p": 8.16363149090364e-31
+  }
+ },
+ "friedman_y_cochran": {
+  "friedman_generadores": {
+   "conjunto": {
+    "Faithfulness": {
+     "n": 200,
+     "chi2": 122.6517857142859,
+     "p": 2.325429268700882e-27
+    },
+    "Answer Correctness": {
+     "n": 200,
+     "chi2": 189.08627450980396,
+     "p": 8.718407986068926e-42
+    },
+    "Answer Relevance": {
+     "n": 200,
+     "chi2": 26.212276214833704,
+     "p": 2.032715228973576e-06
+    }
+   },
+   "Lenguaje natural": {
+    "Faithfulness": {
+     "n": 100,
+     "chi2": 9.379501385041461,
+     "p": 0.0091889767513325
+    },
+    "Answer Correctness": {
+     "n": 100,
+     "chi2": 22.63681592039801,
+     "p": 1.214724746177719e-05
+    },
+    "Answer Relevance": {
+     "n": 100,
+     "chi2": 0.870886075949496,
+     "p": 0.6469779677648375
+    }
+   },
+   "Semiestructurado": {
+    "Faithfulness": {
+     "n": 100,
+     "chi2": 172.3279742765275,
+     "p": 3.797133331187324e-38
+    },
+    "Answer Correctness": {
+     "n": 100,
+     "chi2": 191.2427184466021,
+     "p": 2.9660013012827246e-42
+    },
+    "Answer Relevance": {
+     "n": 100,
+     "chi2": 51.69509043927659,
+     "p": 5.9505038478914515e-12
+    }
+   }
+  },
+  "cochran_alucinacion": {
+   "conjunto": {
+    "n": 200,
+    "Q": 350.9300970873786,
+    "p": 9.381673752137938e-76
+   },
+   "Lenguaje natural": {
+    "n": 100,
+    "Q": 110.64406779661017,
+    "p": 7.974865187575224e-24
+   },
+   "Semiestructurado": {
+    "n": 100,
+    "Q": 249.32258064516128,
+    "p": 9.169420966499737e-54
+   }
+  }
+ },
+ "validez_y_estabilidad": {
+  "spearman_F_vs_AC": {
+   "Lenguaje natural": {
+    "rho": -0.014038356463386576,
+    "p": 0.7795524920331042,
+    "n": 400
+   },
+   "Semiestructurado": {
+    "rho": 0.9686361501978091,
+    "p": 8.787453871344063e-243,
+    "n": 400
+   }
+  },
+  "sensibilidad_umbral": {
+   "Lenguaje natural": {
+    "0.3": {
+     "FT_Qwen": 0.81,
+     "RAG_Claude": 0.21,
+     "RAG_GPT": 0.25,
+     "RAG_Gemini": 0.24
+    },
+    "0.5": {
+     "FT_Qwen": 0.91,
+     "RAG_Claude": 0.43,
+     "RAG_GPT": 0.35,
+     "RAG_Gemini": 0.35
+    },
+    "0.7": {
+     "FT_Qwen": 0.99,
+     "RAG_Claude": 0.75,
+     "RAG_GPT": 0.58,
+     "RAG_Gemini": 0.53
+    }
+   },
+   "Semiestructurado": {
+    "0.3": {
+     "FT_Qwen": 0.73,
+     "RAG_Claude": 0.0,
+     "RAG_GPT": 0.0,
+     "RAG_Gemini": 0.0
+    },
+    "0.5": {
+     "FT_Qwen": 0.9,
+     "RAG_Claude": 0.07,
+     "RAG_GPT": 0.0,
+     "RAG_Gemini": 0.0
+    },
+    "0.7": {
+     "FT_Qwen": 0.91,
+     "RAG_Claude": 0.17,
+     "RAG_GPT": 0.01,
+     "RAG_Gemini": 0.0
+    }
+   }
+  },
+  "estabilidad": {
+   "faithfulness_std": {
+    "media": 0.010068388680848153,
+    "pct_sobre_0_05": 7.249999999999999
+   },
+   "answer_correctness_std": {
+    "media": 0.006613066700887407,
+    "pct_sobre_0_05": 5.375
+   },
+   "answer_relevance_std": {
+    "media": 0.061215758766787885,
+    "pct_sobre_0_05": 27.625
+   },
+   "pct_respuestas_con_alguna_metrica_sobre_0_05": 37.375
+  },
+  "alucinacion_con_AC_alta": {
+   "Lenguaje natural": {
+    "FT_Qwen": 8,
+    "RAG_Claude": 15,
+    "RAG_GPT": 19,
+    "RAG_Gemini": 16
+   },
+   "Semiestructurado": {
+    "FT_Qwen": 3,
+    "RAG_Claude": 7,
+    "RAG_GPT": 0,
+    "RAG_Gemini": 0
+   }
+  }
+ },
+ "costo_por_consulta_usd": {
+  "claude": 0.0067,
+  "gpt": 0.0025,
+  "gemini": 0.0028
+ },
+ "controles": {
+  "contrastes": [
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Faithfulness",
+    "comparacion": "Qwen_RAG_congelado vs FT_Qwen",
+    "sentido": "estrategia con el mismo modelo: RAG frente a ajuste fino",
+    "n": 100,
+    "W": 465.0,
+    "p": 1.8022777199085205e-08,
+    "r": 0.562998262924357,
+    "media_a": 0.38751015052485643,
+    "media_b": 0.14515079365079364,
+    "p_holm": 3.244099895835337e-07
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Faithfulness",
+    "comparacion": "Qwen_RAG_congelado vs Qwen_base_sin_RAG",
+    "sentido": "efecto de la recuperación sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 607.0,
+    "p": 5.298443817082031e-08,
+    "r": 0.5440992859501051,
+    "media_a": 0.38751015052485643,
+    "media_b": 0.1378417970534384,
+    "p_holm": 9.007354489039453e-07
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Faithfulness",
+    "comparacion": "FT_Qwen vs Qwen_base_sin_RAG",
+    "sentido": "efecto del ajuste fino sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 1453.0,
+    "p": 0.6629561379528914,
+    "r": 0.04358354272236921,
+    "media_a": 0.14515079365079364,
+    "media_b": 0.1378417970534384,
+    "p_holm": 1.0
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Faithfulness",
+    "comparacion": "Qwen_RAG_congelado vs promedio RAG comercial",
+    "sentido": "capacidad del modelo: Qwen frente a los tres generadores comerciales",
+    "n": 100,
+    "W": 949.0,
+    "p": 1.6760281622522605e-07,
+    "r": 0.5232091421792213,
+    "media_a": 0.38751015052485643,
+    "media_b": 0.5651055867590115,
+    "p_holm": 2.514042243378391e-06
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Correctness",
+    "comparacion": "Qwen_RAG_congelado vs FT_Qwen",
+    "sentido": "estrategia con el mismo modelo: RAG frente a ajuste fino",
+    "n": 100,
+    "W": 417.5,
+    "p": 0.00014885594168756366,
+    "r": 0.3792970340854965,
+    "media_a": 0.2724297585226378,
+    "media_b": 0.1392340622340622,
+    "p_holm": 0.0017862713002507638
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Correctness",
+    "comparacion": "Qwen_RAG_congelado vs Qwen_base_sin_RAG",
+    "sentido": "efecto de la recuperación sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 167.5,
+    "p": 9.960993632983414e-08,
+    "r": 0.5327434035756324,
+    "media_a": 0.2724297585226378,
+    "media_b": 0.08383160696086392,
+    "p_holm": 1.5937589812773462e-06
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Correctness",
+    "comparacion": "FT_Qwen vs Qwen_base_sin_RAG",
+    "sentido": "efecto del ajuste fino sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 274.5,
+    "p": 0.01006447875914993,
+    "r": 0.25736060840505626,
+    "media_a": 0.1392340622340622,
+    "media_b": 0.08383160696086392,
+    "p_holm": 0.06038687255489958
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Correctness",
+    "comparacion": "Qwen_RAG_congelado vs promedio RAG comercial",
+    "sentido": "capacidad del modelo: Qwen frente a los tres generadores comerciales",
+    "n": 100,
+    "W": 771.0,
+    "p": 0.6592413843009397,
+    "r": 0.04409607886851984,
+    "media_a": 0.2724297585226378,
+    "media_b": 0.288750643147702,
+    "p_holm": 1.0
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Relevance",
+    "comparacion": "Qwen_RAG_congelado vs FT_Qwen",
+    "sentido": "estrategia con el mismo modelo: RAG frente a ajuste fino",
+    "n": 100,
+    "W": 1755.0,
+    "p": 0.00810869304206474,
+    "r": 0.26475101295769393,
+    "media_a": 0.6343570393998945,
+    "media_b": 0.5758758261281539,
+    "p_holm": 0.056760851294453185
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Relevance",
+    "comparacion": "Qwen_RAG_congelado vs Qwen_base_sin_RAG",
+    "sentido": "efecto de la recuperación sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 2390.0,
+    "p": 0.7667149269229389,
+    "r": 0.029667463113578717,
+    "media_a": 0.6343570393998945,
+    "media_b": 0.63577819676629,
+    "p_holm": 1.0
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Relevance",
+    "comparacion": "FT_Qwen vs Qwen_base_sin_RAG",
+    "sentido": "efecto del ajuste fino sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 1669.0,
+    "p": 0.003248321221764568,
+    "r": 0.2943206066127091,
+    "media_a": 0.5758758261281539,
+    "media_b": 0.63577819676629,
+    "p_holm": 0.02923489099588111
+   },
+   {
+    "dominio": "Lenguaje natural",
+    "metrica": "Answer Relevance",
+    "comparacion": "Qwen_RAG_congelado vs promedio RAG comercial",
+    "sentido": "capacidad del modelo: Qwen frente a los tres generadores comerciales",
+    "n": 100,
+    "W": 1937.0,
+    "p": 0.043203735179544844,
+    "r": 0.20217350080405722,
+    "media_a": 0.6343570393998945,
+    "media_b": 0.6079605118613698,
+    "p_holm": 0.21601867589772422
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Faithfulness",
+    "comparacion": "Qwen_RAG_congelado vs FT_Qwen",
+    "sentido": "estrategia con el mismo modelo: RAG frente a ajuste fino",
+    "n": 100,
+    "W": 16.0,
+    "p": 1.2194390800916719e-17,
+    "r": 0.855107825567267,
+    "media_a": 0.9364444444444444,
+    "media_b": 0.16249999999999998,
+    "p_holm": 2.6827659762016784e-16
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Faithfulness",
+    "comparacion": "Qwen_RAG_congelado vs Qwen_base_sin_RAG",
+    "sentido": "efecto de la recuperación sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 1.0,
+    "p": 1.0276485825234226e-16,
+    "r": 0.8301546450193962,
+    "media_a": 0.9364444444444444,
+    "media_b": 0.31533333333333335,
+    "p_holm": 2.1580620232991873e-15
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Faithfulness",
+    "comparacion": "FT_Qwen vs Qwen_base_sin_RAG",
+    "sentido": "efecto del ajuste fino sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 813.0,
+    "p": 0.00046193089656119057,
+    "r": 0.35019127302837366,
+    "media_a": 0.16249999999999998,
+    "media_b": 0.31533333333333335,
+    "p_holm": 0.005081239862173096
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Faithfulness",
+    "comparacion": "Qwen_RAG_congelado vs promedio RAG comercial",
+    "sentido": "capacidad del modelo: Qwen frente a los tres generadores comerciales",
+    "n": 100,
+    "W": 1235.5,
+    "p": 9.204368811697687e-06,
+    "r": 0.4435066929843886,
+    "media_a": 0.9364444444444444,
+    "media_b": 0.9213593474426809,
+    "p_holm": 0.00011965679455206994
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Correctness",
+    "comparacion": "Qwen_RAG_congelado vs FT_Qwen",
+    "sentido": "estrategia con el mismo modelo: RAG frente a ajuste fino",
+    "n": 100,
+    "W": 31.0,
+    "p": 5.845584379733925e-18,
+    "r": 0.863552909056641,
+    "media_a": 0.9419444444444446,
+    "media_b": 0.16003968253968254,
+    "p_holm": 1.3444844073388026e-16
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Correctness",
+    "comparacion": "Qwen_RAG_congelado vs Qwen_base_sin_RAG",
+    "sentido": "efecto de la recuperación sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 0.0,
+    "p": 6.647187395291744e-20,
+    "r": 0.9133252047294583,
+    "media_a": 0.9419444444444446,
+    "media_b": 0.007888888888888888,
+    "p_holm": 1.5953249748700185e-18
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Correctness",
+    "comparacion": "FT_Qwen vs Qwen_base_sin_RAG",
+    "sentido": "efecto del ajuste fino sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 5.0,
+    "p": 2.360999855571699e-06,
+    "r": 0.4719779884766866,
+    "media_a": 0.16003968253968254,
+    "media_b": 0.007888888888888888,
+    "p_holm": 3.305399797800378e-05
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Correctness",
+    "comparacion": "Qwen_RAG_congelado vs promedio RAG comercial",
+    "sentido": "capacidad del modelo: Qwen frente a los tres generadores comerciales",
+    "n": 100,
+    "W": 690.0,
+    "p": 3.0668461968347425e-10,
+    "r": 0.629536133061197,
+    "media_a": 0.9419444444444446,
+    "media_b": 0.9037907647907647,
+    "p_holm": 6.133692393669485e-09
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Relevance",
+    "comparacion": "Qwen_RAG_congelado vs FT_Qwen",
+    "sentido": "estrategia con el mismo modelo: RAG frente a ajuste fino",
+    "n": 100,
+    "W": 465.0,
+    "p": 0.002499624513467511,
+    "r": 0.3023386890252483,
+    "media_a": 0.1867553951865851,
+    "media_b": 0.1066983896445472,
+    "p_holm": 0.024996245134675108
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Relevance",
+    "comparacion": "Qwen_RAG_congelado vs Qwen_base_sin_RAG",
+    "sentido": "efecto de la recuperación sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 452.0,
+    "p": 0.45970382267240617,
+    "r": 0.07393346354239347,
+    "media_a": 0.1867553951865851,
+    "media_b": 0.16978345689565588,
+    "p_holm": 1.0
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Relevance",
+    "comparacion": "FT_Qwen vs Qwen_base_sin_RAG",
+    "sentido": "efecto del ajuste fino sobre el modelo sin ajustar",
+    "n": 100,
+    "W": 729.0,
+    "p": 0.004224058722091061,
+    "r": 0.28609258212693744,
+    "media_a": 0.1066983896445472,
+    "media_b": 0.16978345689565588,
+    "p_holm": 0.033792469776728486
+   },
+   {
+    "dominio": "Semiestructurado",
+    "metrica": "Answer Relevance",
+    "comparacion": "Qwen_RAG_congelado vs promedio RAG comercial",
+    "sentido": "capacidad del modelo: Qwen frente a los tres generadores comerciales",
+    "n": 100,
+    "W": 833.0,
+    "p": 5.968225746376303e-09,
+    "r": 0.5817645635382053,
+    "media_a": 0.1867553951865851,
+    "media_b": 0.3655650726498474,
+    "p_holm": 1.1339628918114976e-07
+   }
+  ],
+  "tasa_alucinacion": {
+   "Lenguaje natural": {
+    "FT_Qwen": 0.91,
+    "Qwen_RAG_congelado": 0.56,
+    "Qwen_base_sin_RAG": 0.97,
+    "RAG_Claude": 0.43,
+    "RAG_GPT": 0.35,
+    "RAG_Gemini": 0.35
+   },
+   "Semiestructurado": {
+    "FT_Qwen": 0.9,
+    "Qwen_RAG_congelado": 0.03,
+    "Qwen_base_sin_RAG": 0.73,
+    "RAG_Claude": 0.07,
+    "RAG_GPT": 0.0,
+    "RAG_Gemini": 0.0
+   }
+  },
+  "cochran_6_configuraciones": {
+   "n": 200,
+   "Q": 534.655436447167,
+   "p": 2.632761275787606e-113
+  }
+ },
+ "fidelidad_fragmentos_recibidos": {
+  "tasa_alucinacion_recibidos": {
+   "Lenguaje natural": {
+    "Qwen_RAG_congelado": 0.07,
+    "RAG_Claude": 0.0,
+    "RAG_GPT": 0.0,
+    "RAG_Gemini": 0.01
+   },
+   "Semiestructurado": {
+    "Qwen_RAG_congelado": 0.05,
+    "RAG_Claude": 0.0,
+    "RAG_GPT": 0.0,
+    "RAG_Gemini": 0.0
+   }
+  },
+  "faithfulness_recibidos_media": {
+   "Lenguaje natural": {
+    "Qwen_RAG_congelado": 0.72,
+    "RAG_Claude": 0.935,
+    "RAG_GPT": 0.984,
+    "RAG_Gemini": 0.982
+   },
+   "Semiestructurado": {
+    "Qwen_RAG_congelado": 0.921,
+    "RAG_Claude": 0.968,
+    "RAG_GPT": 1.0,
+    "RAG_Gemini": 1.0
+   }
+  },
+  "abstencion": {
+   "Lenguaje natural": {
+    "Qwen_RAG_congelado": {
+     "total": 36,
+     "parcial": 12,
+     "ninguna": 52
+    },
+    "RAG_Claude": {
+     "total": 50,
+     "parcial": 35,
+     "ninguna": 15
+    },
+    "RAG_GPT": {
+     "total": 48,
+     "parcial": 20,
+     "ninguna": 32
+    },
+    "RAG_Gemini": {
+     "total": 50,
+     "parcial": 11,
+     "ninguna": 39
+    }
+   },
+   "Semiestructurado": {
+    "Qwen_RAG_congelado": {
+     "total": 6,
+     "parcial": 0,
+     "ninguna": 94
+    },
+    "RAG_Claude": {
+     "total": 4,
+     "parcial": 30,
+     "ninguna": 66
+    },
+    "RAG_GPT": {
+     "total": 0,
+     "parcial": 0,
+     "ninguna": 100
+    },
+    "RAG_Gemini": {
+     "total": 0,
+     "parcial": 0,
+     "ninguna": 100
+    }
+   }
+  },
+  "tasa_alucinacion_contra_c": {
+   "Lenguaje natural": {
+    "Qwen_RAG_congelado": 0.56,
+    "RAG_Claude": 0.43,
+    "RAG_GPT": 0.35,
+    "RAG_Gemini": 0.35
+   },
+   "Semiestructurado": {
+    "Qwen_RAG_congelado": 0.03,
+    "RAG_Claude": 0.07,
+    "RAG_GPT": 0.0,
+    "RAG_Gemini": 0.0
+   }
+  },
+  "spearman_F_recibidos_vs_AC": {
+   "Lenguaje natural": {
+    "rho": 0.20238614757416581,
+    "p": 4.555650880440756e-05,
+    "n": 400
+   },
+   "Semiestructurado": {
+    "rho": 0.44722532046645413,
+    "p": 4.578615002087492e-21,
+    "n": 400
+   }
+  },
+  "AC_alta_y_alucinacion_contra_c_pero_no_contra_recibidos": {
+   "Qwen_RAG_congelado": 17,
+   "RAG_Claude": 15,
+   "RAG_GPT": 19,
+   "RAG_Gemini": 16
+  }
+ },
+ "cruce_usuarios_juez": {
+  "n_pares_caso_configuracion": 300,
+  "por_configuracion": {
+   "FT_Qwen": {
+    "n_coincide_si": 58,
+    "n_coincide_no": 17,
+    "AC_juez_media_si": 0.15434983279810863,
+    "AC_juez_media_no": 0.15878533231474407
+   },
+   "RAG_Claude": {
+    "n_coincide_si": 71,
+    "n_coincide_no": 4,
+    "AC_juez_media_si": 0.27643341500010926,
+    "AC_juez_media_no": 0.0
+   },
+   "RAG_GPT": {
+    "n_coincide_si": 70,
+    "n_coincide_no": 5,
+    "AC_juez_media_si": 0.3440413818985248,
+    "AC_juez_media_no": 0.0
+   },
+   "RAG_Gemini": {
+    "n_coincide_si": 70,
+    "n_coincide_no": 5,
+    "AC_juez_media_si": 0.3560943553800696,
+    "AC_juez_media_no": 0.0
+   }
+  },
+  "rag_respuestas_no_coincide": 14,
+  "rag_no_coincide_con_AC_juez_igual_a_cero": 14,
+  "rag_AC_juez_media": 0.3050501069978194,
+  "rag_coincidencia_usuarios": 0.9377777777777778
+ },
+ "similitud_entrenamiento_prueba": {
+  "Lenguaje natural": {
+   "n": 100,
+   "media_maxima": 0.7100688303359998,
+   "maxima": 0.8722492055062956,
+   "n_sobre_0.8": 13,
+   "n_sobre_0.9": 0,
+   "n_sobre_0.95": 0
+  },
+  "Semiestructurado": {
+   "n": 100,
+   "media_maxima": 0.9157881593091021,
+   "maxima": 0.9406639929706826,
+   "n_sobre_0.8": 100,
+   "n_sobre_0.9": 86,
+   "n_sobre_0.95": 0
+  }
+ },
+ "solapamiento_respuestas": {
+  "Lenguaje natural": {
+   "n_casos": 100,
+   "casos_con_respuesta_identica_en_entrenamiento": 0,
+   "f1_palabras_maximo_medio": 0.385690670724814,
+   "casos_con_f1_maximo_ge_0_9": 0
+  },
+  "Semiestructurado": {
+   "n_casos": 100,
+   "casos_con_respuesta_identica_en_entrenamiento": 100,
+   "f1_palabras_maximo_medio": 1.0,
+   "casos_con_f1_maximo_ge_0_9": 100
+  }
+ },
+ "cobertura_lexica_manuales": {
+  "casos_con_fragmento_de_registros_en_top3": 15,
+  "por_abstencion_de_claude": {
+   "ninguna": {
+    "n": 15,
+    "cobertura_mejor_mediana": 0.5129131257086507,
+    "cobertura_top3_mediana": 0.6915592677923986,
+    "pct_mejor_fragmento_en_top3": 93.33333333333333
+   },
+   "parcial": {
+    "n": 35,
+    "cobertura_mejor_mediana": 0.4077132716600715,
+    "cobertura_top3_mediana": 0.5080397036207612,
+    "pct_mejor_fragmento_en_top3": 57.14285714285714
+   },
+   "total": {
+    "n": 50,
+    "cobertura_mejor_mediana": 0.33067708798887274,
+    "cobertura_top3_mediana": 0.347903331580403,
+    "pct_mejor_fragmento_en_top3": 18.0
+   }
+  }
+ },
+ "energia_gpu": {
+  "potencia_placa_kw": 0.304,
+  "segundos": {
+   "entrenamiento": 878.07,
+   "inferencia_ajustado_200_respuestas": 734.0,
+   "controles_400_respuestas": 2169
+  },
+  "kwh_tope": {
+   "entrenamiento": 0.074,
+   "inferencia_ajustado_200_respuestas": 0.062,
+   "controles_400_respuestas": 0.183
+  },
+  "kwh_tope_total": 0.319
+ }
+}

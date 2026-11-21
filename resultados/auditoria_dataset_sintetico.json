@@ -1,0 +1,31 @@
+{
+  "n_auditados": 807,
+  "n_fallidos": 0,
+  "total": {
+    "n": 807,
+    "respaldo": {
+      "total": 684,
+      "parcial": 123
+    },
+    "pct_respaldo_total": 84.8,
+    "pct_pregunta_respondible": 99.6
+  },
+  "A": {
+    "n": 507,
+    "respaldo": {
+      "total": 418,
+      "parcial": 89
+    },
+    "pct_respaldo_total": 82.4,
+    "pct_pregunta_respondible": 99.4
+  },
+  "B": {
+    "n": 300,
+    "respaldo": {
+      "parcial": 34,
+      "total": 266
+    },
+    "pct_respaldo_total": 88.7,
+    "pct_pregunta_respondible": 100.0
+  }
+}

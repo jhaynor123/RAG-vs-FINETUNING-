@@ -1,12 +1,16 @@
 # secretos
 .env
 
-# datos de la planta (propiedad de la empresa) y textos derivados de sus manuales
+# datos de la planta (propiedad de la empresa) y textos derivados de su documentación
 data/
 casos_prueba/casos_de_prueba.jsonl
-resultados/juicios_detalle.jsonl
-resultados/juicios_parciales.jsonl
-resultados/validacion_usuarios/interacciones*.jsonl
+resultados/juicios_detalle*.jsonl
+resultados/juicios_parciales*.jsonl
+resultados/fidelidad_parciales.jsonl
+resultados/auditoria_parciales.jsonl
+resultados/auditoria_dataset_sintetico.csv
+resultados/hojas_para_expertos/
+resultados/validacion_usuarios/interacciones.jsonl
 
 # artefactos regenerables o pesados
 modelos/

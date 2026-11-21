@@ -1,11 +1,11 @@
 Matriz de rendimiento cargada: 800 filas
 
 === RAG vs. Fine-Tuning por dominio y métrica (RAG = promedio de sus 3 generadores) ===
-  [Lenguaje natural] Faithfulness: RAG=0.5651 vs FT=0.1452 -> gana RAG | Wilcoxon (rangos con signo), p=0.0 (SIGNIFICATIVO), r=0.8204
-  [Lenguaje natural] Answer Correctness: RAG=0.2888 vs FT=0.1392 -> gana RAG | Wilcoxon (rangos con signo), p=7.5e-05 (SIGNIFICATIVO), r=0.7078
+  [Lenguaje natural] Faithfulness: RAG=0.5651 vs FT=0.1452 -> gana RAG | Wilcoxon (rangos con signo), p=0.0 (SIGNIFICATIVO), r=0.8102
+  [Lenguaje natural] Answer Correctness: RAG=0.2888 vs FT=0.1392 -> gana RAG | Wilcoxon (rangos con signo), p=7.5e-05 (SIGNIFICATIVO), r=0.396
   [Lenguaje natural] Answer Relevance: RAG=0.608 vs FT=0.5759 -> gana RAG | T-Student pareada, p=0.146453 (no significativo), d de Cohen=0.1464
-  [Semiestructurado] Faithfulness: RAG=0.9214 vs FT=0.1625 -> gana RAG | Wilcoxon (rangos con signo), p=0.0 (SIGNIFICATIVO), r=0.8558
-  [Semiestructurado] Answer Correctness: RAG=0.9038 vs FT=0.16 -> gana RAG | Wilcoxon (rangos con signo), p=0.0 (SIGNIFICATIVO), r=0.8582
+  [Semiestructurado] Faithfulness: RAG=0.9214 vs FT=0.1625 -> gana RAG | Wilcoxon (rangos con signo), p=0.0 (SIGNIFICATIVO), r=0.8514
+  [Semiestructurado] Answer Correctness: RAG=0.9038 vs FT=0.16 -> gana RAG | Wilcoxon (rangos con signo), p=0.0 (SIGNIFICATIVO), r=0.8657
   [Semiestructurado] Answer Relevance: RAG=0.3656 vs FT=0.1067 -> gana RAG | T-Student pareada, p=0.0 (SIGNIFICATIVO), d de Cohen=1.9152
 
 === Desglose descriptivo por generador (sin pruebas de hipótesis) ===

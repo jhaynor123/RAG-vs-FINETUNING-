@@ -28,6 +28,7 @@ from scipy import stats
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 import config
+from idioma import SUFIJO, T, dec, miles
 
 TINTA, TINTA_2, REJILLA = "#0b0b0b", "#52514e", "#e5e4e0"
 COLOR_DOMINIO = {"Lenguaje natural": "#2a78d6", "Semiestructurado": "#eb6834"}
@@ -35,7 +36,7 @@ MARCA_DOMINIO = {"Lenguaje natural": "o", "Semiestructurado": "s"}
 CONFIGS = ["RAG_GPT", "RAG_Claude", "RAG_Gemini", "FT_Qwen"]
 NOMBRE = {"RAG_GPT": "RAG · ChatGPT", "RAG_Claude": "RAG · Claude", "RAG_Gemini": "RAG · Gemini",
           "FT_Qwen": "Fine-Tuning · Qwen2.5-7B"}
-CORTO = {"RAG_GPT": "ChatGPT", "RAG_Claude": "Claude", "RAG_Gemini": "Gemini", "FT_Qwen": "Fine-Tuning"}
+CORTO = {"RAG_GPT": "ChatGPT", "RAG_Claude": "Claude", "RAG_Gemini": "Gemini", "FT_Qwen": T("Fine-Tuning")}
 COLOR_CONFIG = {"RAG_GPT": "#2a78d6", "RAG_Claude": "#eb6834", "RAG_Gemini": "#1baf7a", "FT_Qwen": "#52514e"}
 MARCA_CONFIG = {"RAG_GPT": "o", "RAG_Claude": "s", "RAG_Gemini": "^", "FT_Qwen": "D"}
 DOMINIOS = ["Lenguaje natural", "Semiestructurado"]
@@ -147,42 +148,131 @@ def fig5():
     return salida
 
 
+CONFIGS_EXT = ["RAG_GPT", "RAG_Claude", "RAG_Gemini", "Qwen_RAG_congelado", "FT_Qwen", "Qwen_base_sin_RAG"]
+CORTO_EXT = {**CORTO, "Qwen_RAG_congelado": T("Qwen\n+ RAG"), "Qwen_base_sin_RAG": T("Qwen\nsin ajustar"),
+             "RAG_GPT": "ChatGPT", "RAG_Claude": "Claude", "RAG_Gemini": "Gemini", "FT_Qwen": T("Qwen\najustado")}
+
+
+def _estrellas(p):
+    return "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "n.s."
+
+
+def fig5_extendida():
+    """Fig. 3 con las condiciones de control: arriba, medias con IC 95 % de las seis configuraciones;
+    abajo, diferencias pareadas por caso entre las estrategias (con Qwen como modelo común)."""
+    m = pd.concat([pd.read_csv(config.RESULTADOS_DIR / "matriz_rendimiento.csv"),
+                   pd.read_csv(config.RESULTADOS_DIR / "matriz_rendimiento_controles.csv")], ignore_index=True)
+    rep = json.load(open(config.RESULTADOS_DIR / "reporte_adicional.json", encoding="utf-8"))
+    p_rag = {(c["dominio"], c["metrica"]): c["p_holm"] for c in rep["contrastes"]["rag_vs_ft"]}
+    p_ctl = {(c["dominio"], c["metrica"], c["comparacion"]): c["p_holm"] for c in rep["controles"]["contrastes"]}
+    contrastes = [(T("RAG comercial\n− ajustado"), None), (T("Qwen+RAG\n− ajustado"), "Qwen_RAG_congelado vs FT_Qwen"),
+                  (T("Ajustado − Qwen\nsin ajustar"), "FT_Qwen vs Qwen_base_sin_RAG")]
+    fig, ejes = plt.subplots(2, 3, figsize=(14, 8.6), gridspec_kw={"height_ratios": [1, 1.1]})
+    for k, (col, nombre) in enumerate(METRICAS):
+        arriba = ejes[0, k]
+        for d_i, dom in enumerate(DOMINIOS):
+            sub = m[m["subset"] == SUBSET[dom]]
+            for c_i, cfg in enumerate(CONFIGS_EXT):
+                v = sub[sub["arquitectura"] == cfg][col].values
+                arriba.errorbar(c_i + (d_i - 0.5) * 0.24, v.mean(), yerr=ic95(v), fmt=MARCA_DOMINIO[dom],
+                                color=COLOR_DOMINIO[dom], markersize=7.5, markeredgecolor="white", markeredgewidth=1.1,
+                                capsize=3, linewidth=1.5, label=T(dom) if c_i == 0 else None)
+        arriba.set_title(nombre, fontsize=11.5, fontweight="bold", color=TINTA)
+        arriba.set_xticks(range(len(CONFIGS_EXT)))
+        arriba.set_xticklabels([CORTO_EXT[c] for c in CONFIGS_EXT], fontsize=8)
+        arriba.set_xlim(-0.5, len(CONFIGS_EXT) - 0.5)
+        estilo(arriba)
+        if k == 0:
+            arriba.set_ylabel(T("Media con IC 95 %"), fontsize=10, color=TINTA_2)
+
+        abajo = ejes[1, k]
+        posiciones, datos, colores, etiquetas = [], [], [], []
+        for d_i, dom in enumerate(DOMINIOS):
+            sub = m[m["subset"] == SUBSET[dom]]
+            w = sub.pivot(index="caso_id", columns="arquitectura", values=col)
+            difs = [w[CONFIGS[:3]].mean(axis=1) - w["FT_Qwen"], w["Qwen_RAG_congelado"] - w["FT_Qwen"],
+                    w["FT_Qwen"] - w["Qwen_base_sin_RAG"]]
+            for j, (etq, clave) in enumerate(contrastes):
+                pos = d_i * 3.6 + j
+                posiciones.append(pos)
+                datos.append(difs[j].dropna().values)
+                colores.append(COLOR_DOMINIO[dom])
+                etiquetas.append(etq)
+                p = p_rag[(dom, nombre)] if clave is None else p_ctl[(dom, nombre, clave)]
+                abajo.text(pos, 1.12, _estrellas(p), ha="center", va="bottom", fontsize=9, color=TINTA_2)
+        bp = abajo.boxplot(datos, positions=posiciones, widths=0.62, patch_artist=True, showmeans=True,
+                           medianprops=dict(color=TINTA, linewidth=1.5),
+                           meanprops=dict(marker="D", markerfacecolor="white", markeredgecolor=TINTA, markersize=5),
+                           flierprops=dict(marker="o", markersize=2.5, markerfacecolor=TINTA_2, markeredgecolor="none", alpha=0.5),
+                           whiskerprops=dict(color=TINTA_2), capprops=dict(color=TINTA_2))
+        for caja, color in zip(bp["boxes"], colores):
+            caja.set_facecolor(color)
+            caja.set_alpha(0.55)
+            caja.set_edgecolor(color)
+        abajo.axhline(0, color=TINTA, linestyle="--", linewidth=1)
+        abajo.set_xticks(posiciones)
+        abajo.set_xticklabels(list("abc") * 2, fontsize=11, fontweight="bold")
+        abajo.set_xlim(-0.6, 3.6 + 2.6)
+        estilo(abajo, ylim=(-1.1, 1.4))
+        if k == 0:
+            abajo.set_ylabel(T("Diferencia por caso"), fontsize=10, color=TINTA_2)
+    h, l = ejes[0, 0].get_legend_handles_labels()
+    fig.legend(h, l, loc="upper center", ncol=2, frameon=False, fontsize=10, bbox_to_anchor=(0.5, 1.0))
+    clave = "   ".join(f"{letra} = {e.replace(chr(10), ' ')}" for letra, e in zip("abc", [c[0] for c in contrastes]))
+    fig.text(0.5, 0.012, T("Abajo: ") + clave + T(". Los tres primeros cuadros de cada panel son de manuales y los tres últimos de registros. "
+                                             "*** p < 0,001, ** p < 0,01, * p < 0,05, n.s. no significativo (Holm)."),
+             ha="center", fontsize=8.5, color=TINTA_2, wrap=True)
+    plt.tight_layout(rect=(0, 0.03, 1, 0.95))
+    salida = DEST / f"fig5_contrastes_controles{SUFIJO}.png"
+    plt.savefig(salida, dpi=200, facecolor="white")
+    plt.close(fig)
+    return salida
+
+
 def fig7():
     gen = json.load(open(config.RESULTADOS_DIR / "costo_generacion_rag.json", encoding="utf-8"))
     qa = json.load(open(config.RESULTADOS_DIR / "costo_dataset_qa.json", encoding="utf-8"))
     juez = json.load(open(config.RESULTADOS_DIR / "costo_juez.json", encoding="utf-8"))
     def mtok(x):
-        return f"{(x['tokens_entrada'] + x['tokens_salida']) / 1e6:.2f}".replace(".", ",")
+        return dec(f"{(x['tokens_entrada'] + x['tokens_salida']) / 1e6:.2f}")
 
     def etiqueta(nombre, x):
-        llamadas = f"{x['llamadas']:,}".replace(",", " ")
-        return f"{nombre}\n{llamadas} llamadas · {mtok(x)} M tokens"
+        return f"{nombre}\n{miles(x['llamadas'])} {T('llamadas')} · {mtok(x)} M tokens"
 
-    items = [(etiqueta("Juez DeepSeek-V4-Pro (2 400 juicios)", juez), juez["costo_usd_tarifa_pico"]),
-             (etiqueta("Dataset de entrenamiento (Claude Sonnet 5.5)", qa), qa["costo_usd"]),
-             (etiqueta("Generador RAG · Claude", gen["claude"]), gen["claude"]["costo_usd"]),
-             (etiqueta("Generador RAG · Gemini", gen["gemini"]), gen["gemini"]["costo_usd"]),
-             (etiqueta("Generador RAG · ChatGPT", gen["gpt"]), gen["gpt"]["costo_usd"]),
-             ("Generador Fine-Tuning · Qwen2.5-7B\n200 respuestas en GPU local, sin API", 0.0)]
+    items = [(etiqueta(T("Juez DeepSeek-V4-Pro (2 400 juicios)"), juez), juez["costo_usd_tarifa_pico"]),
+             (etiqueta(T("Dataset de entrenamiento (Claude Sonnet 5.5)"), qa), qa["costo_usd"]),
+             (etiqueta(T("Generador RAG · Claude"), gen["claude"]), gen["claude"]["costo_usd"]),
+             (etiqueta(T("Generador RAG · Gemini"), gen["gemini"]), gen["gemini"]["costo_usd"]),
+             (etiqueta(T("Generador RAG · ChatGPT"), gen["gpt"]), gen["gpt"]["costo_usd"])]
+    adicionales = [("costo_juez_controles.json", T("Juez: condiciones de control")),
+                   ("costo_juez_fidelidad.json", T("Juez: fidelidad frente a fragmentos recibidos")),
+                   ("costo_juez_auditoria.json", T("Juez: auditoría del dataset sintético"))]
+    for archivo, nombre in adicionales:
+        ruta = config.RESULTADOS_DIR / archivo
+        if ruta.exists():
+            x = json.load(open(ruta, encoding="utf-8"))
+            items.append((etiqueta(nombre, x), x["costo_usd_tarifa_pico"]))
+    items.append((T("Fine-Tuning y controles con Qwen2.5-7B\nGPU local, sin costo de API"), 0.0))
+    items.sort(key=lambda t: -t[1])
     total = sum(v for _, v in items)
     fig, eje = plt.subplots(figsize=(9.5, 5.4))
     y = np.arange(len(items))[::-1]
     eje.barh(y, [v for _, v in items], height=0.55, color="#2a78d6")
     for yy, (_, v) in zip(y, items):
-        eje.text(v + 0.12, yy, f"${v:.2f}".replace(".", ","), va="center", fontsize=10, color=TINTA)
+        eje.text(v + 0.12, yy, dec(f"${v:.2f}"), va="center", fontsize=10, color=TINTA)
     eje.set_yticks(y)
     eje.set_yticklabels([n for n, _ in items], fontsize=9, color=TINTA)
     eje.set_xlim(0, max(v for _, v in items) * 1.18)
-    eje.set_xlabel("Costo real (USD)", fontsize=10, color=TINTA_2)
+    eje.set_xlabel(T("Costo real (USD)"), fontsize=10, color=TINTA_2)
     eje.grid(axis="x", color=REJILLA, linewidth=0.8)
     eje.set_axisbelow(True)
     for lado in ("top", "right"):
         eje.spines[lado].set_visible(False)
     eje.tick_params(colors=TINTA_2)
-    eje.text(0.98, 0.04, f"Total de la campaña (API): ${total:.2f}".replace(".", ","), transform=eje.transAxes,
+    eje.text(0.98, 0.04, dec(f"{T('Total de la campaña (API): $')}{total:.2f}"), transform=eje.transAxes,
              ha="right", fontsize=10.5, fontweight="bold", color=TINTA)
     plt.tight_layout()
-    salida = DEST / "fig7_costos.png"
+    salida = DEST / f"fig7_costos{SUFIJO}.png"
     plt.savefig(salida, dpi=200, facecolor="white")
     plt.close(fig)
     return salida
@@ -192,6 +282,8 @@ def main():
     DEST.mkdir(exist_ok=True)
     for f in (fig4, fig5, fig7):
         print("guardado:", f())
+    if (config.RESULTADOS_DIR / "matriz_rendimiento_controles.csv").exists() and (config.RESULTADOS_DIR / "reporte_adicional.json").exists():
+        print("guardado:", fig5_extendida())
 
 
 if __name__ == "__main__":

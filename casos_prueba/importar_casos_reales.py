@@ -5,11 +5,13 @@ que vienen en formato chat JSONL ({"messages": [system, user, assistant]}), y
 los convierte al formato que usa el resto del pipeline:
 casos_prueba/casos_de_prueba.jsonl.
 
-Estos 200 pares son solo de evaluación (Fase 5). No deben entrar al dataset
-de entrenamiento de la Ruta B: si el modelo viera la respuesta exacta, la
-comparación mediría memorización y no generalización. El dataset de
-entrenamiento se genera aparte (fase2_orquestacion.py) a partir de los
-fragmentos del corpus, y descarta toda pregunta igual a un caso de prueba.
+Estos 200 pares son solo de evaluación (Fase 5). El dataset de entrenamiento
+de la Ruta B se genera aparte (fase2_orquestacion.py) a partir de los fragmentos
+del corpus y descarta toda pregunta igual a un caso de prueba. Ese filtro no
+impide que la respuesta de un caso aparezca en el entrenamiento con otra
+pregunta: en los registros ocurre en los 100 casos (ver analisis_adicional.py,
+solapamiento_respuestas), de modo que la prueba mide retención del conocimiento
+del corpus y no generalización a documentos nuevos.
 
 Uso:
     python casos_prueba/importar_casos_reales.py

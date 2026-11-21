@@ -54,6 +54,11 @@ CAMPOS_RESPUESTA = {
     "RAG_Gemini": "respuesta_rag_gemini",
     "FT_Qwen": "respuesta_ft",
 }
+# Condiciones de control con Qwen2.5-7B sin ajustar (generar_controles.py); se evalúan con --controles.
+CAMPOS_CONTROLES = {
+    "Qwen_RAG_congelado": "respuesta_qwen_rag",
+    "Qwen_base_sin_RAG": "respuesta_qwen_base",
+}
 
 
 def cargar_resultados_respuestas() -> list[dict]:
@@ -105,7 +110,8 @@ def _evaluar_una(fila: dict, arquitectura: str, respuesta: str, cliente) -> tupl
     return juicios, matriz
 
 
-def evaluar_todo(filas: list[dict], cliente, limite: int = None) -> tuple[list, list, list]:
+def evaluar_todo(filas: list[dict], cliente, limite: int = None, campos: dict = None,
+                 parciales_nombre: str = "juicios_parciales.jsonl") -> tuple[list, list, list]:
     """Evalúa todas las respuestas en paralelo (config.JUEZ_CONCURRENCIA hilos).
 
     Un fallo en una respuesta no detiene la corrida: queda en `errores` y esa
@@ -115,7 +121,8 @@ def evaluar_todo(filas: list[dict], cliente, limite: int = None) -> tuple[list, 
     if limite:
         filas = filas[:limite]
 
-    parciales = config.RESULTADOS_DIR / "juicios_parciales.jsonl"
+    campos = campos or CAMPOS_RESPUESTA
+    parciales = config.RESULTADOS_DIR / parciales_nombre
     hechos = {}
     if parciales.exists():
         for l in open(parciales, encoding="utf-8"):
@@ -127,7 +134,7 @@ def evaluar_todo(filas: list[dict], cliente, limite: int = None) -> tuple[list, 
     todas = [
         (fila, arquitectura, fila[campo])
         for fila in filas
-        for arquitectura, campo in CAMPOS_RESPUESTA.items()
+        for arquitectura, campo in campos.items()
         if fila.get(campo)
     ]
     pendientes = [t for t in todas if (t[0]["caso_id"], t[1]) not in hechos]
@@ -264,30 +271,31 @@ def _llamar_preferencia_4vias(cliente, pregunta: str, respuestas_en_orden: list[
     return json.loads(bruto[inicio:fin])
 
 
-def guardar_resultados(juicios: list[dict], matriz: list[dict], errores: list[dict] = ()):
-    with open(config.RESULTADOS_DIR / "juicios_detalle.jsonl", "w", encoding="utf-8") as f:
+def guardar_resultados(juicios: list[dict], matriz: list[dict], errores: list[dict] = (), sufijo: str = ""):
+    with open(config.RESULTADOS_DIR / f"juicios_detalle{sufijo}.jsonl", "w", encoding="utf-8") as f:
         for j in juicios:
             f.write(json.dumps(j, ensure_ascii=False) + "\n")
 
     if errores:
-        with open(config.RESULTADOS_DIR / "juicios_errores.jsonl", "w", encoding="utf-8") as f:
+        with open(config.RESULTADOS_DIR / f"juicios_errores{sufijo}.jsonl", "w", encoding="utf-8") as f:
             for e in errores:
                 f.write(json.dumps(e, ensure_ascii=False) + "\n")
 
     if matriz:
-        with open(config.RESULTADOS_DIR / "matriz_rendimiento.csv", "w", newline="", encoding="utf-8") as f:
+        with open(config.RESULTADOS_DIR / f"matriz_rendimiento{sufijo}.csv", "w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=list(matriz[0].keys()))
             writer.writeheader()
             writer.writerows(matriz)
 
-    print(f"\nGuardado: {config.RESULTADOS_DIR / 'juicios_detalle.jsonl'} ({len(juicios)} juicios)")
-    print(f"Guardado: {config.RESULTADOS_DIR / 'matriz_rendimiento.csv'} ({len(matriz)} filas)")
+    print(f"\nGuardado: juicios_detalle{sufijo}.jsonl ({len(juicios)} juicios) y matriz_rendimiento{sufijo}.csv ({len(matriz)} filas)")
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--limite", type=int, default=None, help="Limita el número de casos (pruebas rápidas)")
     ap.add_argument("--sesgo-posicion", action="store_true", help="Corre también el chequeo de sesgo de posición")
+    ap.add_argument("--controles", action="store_true",
+                    help="Evalúa solo las condiciones de control con Qwen sin ajustar (salidas con sufijo _controles)")
     args = ap.parse_args()
 
     if not config.DEEPSEEK_API_KEY:
@@ -304,16 +312,19 @@ def main():
         return
 
     print("=== Fase 5: Juez ciego con DeepSeek ===\n")
-    juicios, matriz, errores = evaluar_todo(filas, cliente, limite=args.limite)
-    guardar_resultados(juicios, matriz, errores)
+    campos = CAMPOS_CONTROLES if args.controles else CAMPOS_RESPUESTA
+    sufijo = "_controles" if args.controles else ""
+    juicios, matriz, errores = evaluar_todo(filas, cliente, limite=args.limite, campos=campos,
+                                            parciales_nombre=f"juicios_parciales{sufijo}.jsonl")
+    guardar_resultados(juicios, matriz, errores, sufijo)
     u = dict(USO_JUEZ)
     u["modelo"] = config.DEEPSEEK_MODEL_JUEZ
     u["costo_usd_tarifa_pico"] = round(config.costo_usd(config.DEEPSEEK_MODEL_JUEZ, u["tokens_entrada"], u["tokens_salida"]), 4)
-    with open(config.RESULTADOS_DIR / "costo_juez.json", "w", encoding="utf-8") as f:
+    with open(config.RESULTADOS_DIR / f"costo_juez{sufijo}.json", "w", encoding="utf-8") as f:
         json.dump(u, f, indent=2, ensure_ascii=False)
     print(f"Costo real del juez (tarifa pico): ${u['costo_usd_tarifa_pico']} USD ({u['llamadas']} llamadas)")
 
-    if args.sesgo_posicion:
+    if args.sesgo_posicion and not args.controles:
         print("\nChequeo de sesgo de posición ...")
         resultado_sesgo = verificar_sesgo_de_posicion(filas, cliente)
         print(json.dumps(resultado_sesgo, indent=2, ensure_ascii=False))

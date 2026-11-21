@@ -112,10 +112,10 @@ def _normalizar(texto: str) -> str:
 
 
 def filtrar_fuga_con_casos_de_prueba(dataset: list[dict]) -> tuple[list[dict], int]:
-    """El corpus de tickets ES la fuente de los casos de prueba, así que el
-    dataset sintético no puede contener ninguno de ellos (el artículo declara
-    que excluye los casos de prueba). Elimina los pares cuya pregunta, una vez
-    normalizada, coincide con la de un caso de prueba."""
+    """Elimina los pares cuya pregunta, una vez normalizada, coincide con la de un
+    caso de prueba. No elimina pares con la misma respuesta y otra pregunta: el
+    corpus de registros es la fuente de los casos de prueba, y sus respuestas sí
+    aparecen en el dataset (ver analisis_adicional.py, solapamiento_respuestas)."""
     path = config.CASOS_PRUEBA_DIR / "casos_de_prueba.jsonl"
     if not path.exists():
         return dataset, 0

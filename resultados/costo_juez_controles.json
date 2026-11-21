@@ -1,0 +1,8 @@
+{
+  "llamadas": 3600,
+  "tokens_entrada": 1408875,
+  "tokens_salida": 879561,
+  "modelo": "deepseek-v4-pro",
+  "costo_usd_tarifa_pico": 5.3427,
+  "nota": "Suma de dos pasadas (140 y 260 respuestas) sobre las 400 respuestas de las condiciones de control."
+}

@@ -95,11 +95,10 @@ def comparar_rutas(df: pd.DataFrame) -> list[dict]:
                     stat, p_valor = stats.wilcoxon(a, b)
                 except ValueError:
                     stat, p_valor = np.nan, 1.0
+                # r = z / raíz(N), con z tomado del propio valor p de la prueba (aproximación normal con
+                # corrección por empates y por diferencias nulas, que scipy descarta del cálculo de W)
                 n = len(diffs)
-                effect_size = (
-                    abs(stat - n * (n + 1) / 4) / np.sqrt(n * (n + 1) * (2 * n + 1) / 24) / np.sqrt(n)
-                    if n > 0 else np.nan
-                )
+                effect_size = stats.norm.isf(max(p_valor, 1e-300) / 2) / np.sqrt(n) if n > 0 else np.nan
                 nombre_prueba, nombre_efecto = "Wilcoxon (rangos con signo)", "r"
 
             filas_reporte.append({
@@ -114,6 +113,7 @@ def comparar_rutas(df: pd.DataFrame) -> list[dict]:
                 "estadistico": round(float(stat), 4) if stat == stat else None,
                 "gl": len(a) - 1 if es_normal else None,
                 "p_valor": round(float(p_valor), 6),
+                "p_exacto": float(p_valor),
                 "significativo_0.05": bool(p_valor < config.ALPHA_SIGNIFICANCIA),
                 "tamano_efecto": round(float(effect_size), 4) if effect_size == effect_size else None,
                 "tipo_efecto": nombre_efecto,

@@ -21,6 +21,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 sys.path.insert(0, str(Path(__file__).parent.parent / "fase5_evaluacion"))
 import config
+from idioma import SUFIJO, T, dec
 from graficar_resultados import (COLOR_CONFIG, CONFIGS, CORTO, MARCA_CONFIG, REJILLA, TINTA, TINTA_2, ic95)
 
 
@@ -55,21 +56,21 @@ def graficar(inter: list[dict], salida=None):
         lo, hi = wilson(k, n)
         a.errorbar(k / n, y, xerr=[[k / n - lo], [hi - k / n]], fmt=MARCA_CONFIG[cfg], color=COLOR_CONFIG[cfg],
                    markersize=9, markeredgecolor="white", markeredgewidth=1.2, capsize=3, linewidth=1.8)
-        a.text(hi + 0.025, y, f"{k / n:.2f}".replace(".", ","), fontsize=9.5, color=TINTA, ha="left", va="center")
+        a.text(hi + 0.025, y, dec(f"{k / n:.2f}"), fontsize=9.5, color=TINTA, ha="left", va="center")
     a.set_yticks(range(len(CONFIGS))[::-1])
     a.set_yticklabels([CORTO[x] for x in CONFIGS], fontsize=10, color=TINTA)
     a.set_xlim(0, 1.12)
     a.set_ylim(-0.6, len(CONFIGS) - 0.4)
-    a.set_xlabel("Proporción de respuestas que el participante\nmarcó como coincidentes (IC de Wilson 95 %)",
+    a.set_xlabel(T("Proporción de respuestas que el participante\nmarcó como coincidentes (IC de Wilson 95 %)"),
                  fontsize=9.5, color=TINTA_2)
-    a.set_title("(a) Coincidencia con el manual", fontsize=11.5, fontweight="bold", color=TINTA)
+    a.set_title(T("(a) Coincidencia con el manual"), fontsize=11.5, fontweight="bold", color=TINTA)
     a.grid(axis="x", color=REJILLA, linewidth=0.8)
     a.set_axisbelow(True)
     limpiar(a)
 
     # (b) Likert: media con IC 95 %
-    items = [("confianza", "Confianza para\nejecutar la acción"), ("transparencia", "Advertencia ante\ninfo. ausente"),
-             ("tiempo_percibido", "Tiempo de espera\npercibido")]
+    items = [("confianza", T("Confianza para\nejecutar la acción")), ("transparencia", T("Advertencia ante\ninfo. ausente")),
+             ("tiempo_percibido", T("Tiempo de espera\npercibido"))]
     for k_item, (campo, _) in enumerate(items):
         for j, cfg in enumerate(CONFIGS):
             v = np.array([r[campo] for r in resp[cfg]], dtype=float)
@@ -80,8 +81,8 @@ def graficar(inter: list[dict], salida=None):
     b.set_xticks(range(len(items)))
     b.set_xticklabels([t for _, t in items], fontsize=9.5)
     b.set_ylim(0.8, 5.2)
-    b.set_ylabel("Media (1 a 5) con IC 95 %", fontsize=9.5, color=TINTA_2)
-    b.set_title("(b) Escala Likert", fontsize=11.5, fontweight="bold", color=TINTA)
+    b.set_ylabel(T("Media (1 a 5) con IC 95 %"), fontsize=9.5, color=TINTA_2)
+    b.set_title(T("(b) Escala Likert"), fontsize=11.5, fontweight="bold", color=TINTA)
     b.grid(axis="y", color=REJILLA, linewidth=0.8)
     b.set_axisbelow(True)
     limpiar(b)
@@ -96,19 +97,19 @@ def graficar(inter: list[dict], salida=None):
         if frac == 0:
             continue
         c.bar(0, frac, bottom=base, width=0.5, color=COLOR_CONFIG[cfg], edgecolor="white", linewidth=2)
-        etiqueta = f"{CORTO[cfg]}  {frac * 100:.0f} %".replace(".", ",")
+        etiqueta = f"{CORTO[cfg]}  {frac * 100:.0f} %" if SUFIJO == "" else f"{CORTO[cfg]}  {frac * 100:.0f}%"
         c.text(0.3, base + frac / 2, etiqueta, ha="left", va="center", fontsize=9.5, color=TINTA)
         base += frac
     c.set_xlim(-0.4, 1.25)
     c.set_ylim(0, 1)
     c.set_xticks([])
     c.set_yticks([0, 0.25, 0.5, 0.75, 1])
-    c.set_yticklabels(["0 %", "25 %", "50 %", "75 %", "100 %"])
-    c.set_ylabel("Consultas en que fue la preferida", fontsize=9.5, color=TINTA_2)
-    c.set_title("(c) Preferencia de uso", fontsize=11.5, fontweight="bold", color=TINTA)
+    c.set_yticklabels(["0 %", "25 %", "50 %", "75 %", "100 %"] if SUFIJO == "" else ["0%", "25%", "50%", "75%", "100%"])
+    c.set_ylabel(T("Consultas en que fue la preferida"), fontsize=9.5, color=TINTA_2)
+    c.set_title(T("(c) Preferencia de uso"), fontsize=11.5, fontweight="bold", color=TINTA)
     limpiar(c)
 
-    salida = salida or config.RESULTADOS_DIR / "figuras" / "fig6_validacion.png"
+    salida = salida or config.RESULTADOS_DIR / "figuras" / f"fig6_validacion{SUFIJO}.png"
     salida.parent.mkdir(exist_ok=True)
     plt.savefig(salida, dpi=200, bbox_inches="tight", facecolor="white")
     plt.close(fig)

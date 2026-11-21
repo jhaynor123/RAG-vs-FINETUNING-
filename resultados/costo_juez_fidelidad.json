@@ -1,0 +1,8 @@
+{
+  "llamadas": 1600,
+  "tokens_entrada": 1088322,
+  "tokens_salida": 369254,
+  "modelo": "deepseek-v4-pro",
+  "costo_usd_tarifa_pico": 2.8988,
+  "nota": "Suma de dos pasadas: generadores comerciales (600 respuestas) y Qwen + RAG (200 respuestas)."
+}

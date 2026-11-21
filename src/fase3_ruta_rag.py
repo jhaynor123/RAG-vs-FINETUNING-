@@ -30,14 +30,7 @@ import chromadb
 import numpy as np
 from chromadb.config import Settings
 
-PROMPT_GENERADOR = """Eres un asistente técnico de una planta textil. Responde la consulta del usuario basándote ÚNICAMENTE en los fragmentos de contexto que se muestran abajo. Si el contexto no contiene la información necesaria, dilo explícitamente en vez de inventar una respuesta.
-
-Contexto recuperado:
-{contexto}
-
-Consulta: {consulta}
-
-Responde de forma directa y precisa, citando los códigos o cifras exactas cuando el contexto los mencione."""
+from prompts import PROMPT_GENERADOR, formatear_contexto
 
 
 def _coleccion():
@@ -207,9 +200,7 @@ def responder_rag(consulta: str, proveedor: str = "claude", cliente=None, devolv
         raise ValueError(f"proveedor debe ser uno de {list(_GENERADORES)}, no {proveedor!r}")
 
     fragmentos = recuperar(consulta)
-    contexto = "\n\n---\n\n".join(
-        f"[Fuente: {f['metadata']['source_file']}]\n{f['text']}" for f in fragmentos
-    )
+    contexto = formatear_contexto([{"source_file": f["metadata"]["source_file"], "text": f["text"]} for f in fragmentos])
     prompt = PROMPT_GENERADOR.format(contexto=contexto, consulta=consulta)
 
     if cliente is None and not _clave_configurada(proveedor):

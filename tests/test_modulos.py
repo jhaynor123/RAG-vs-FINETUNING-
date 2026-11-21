@@ -93,3 +93,49 @@ def test_costo_total_de_la_campana():
     total = (leer("costo_generacion_rag.json")["total_usd"] + leer("costo_dataset_qa.json")["costo_usd"]
              + leer("costo_juez.json")["costo_usd_tarifa_pico"])
     assert total == pytest.approx(15.26, abs=0.01)
+
+
+# --- análisis añadidos ------------------------------------------------------
+
+def test_kappa_de_cohen():
+    from acuerdo_expertos import kappa
+
+    assert kappa([1, 1, 0, 0], [1, 1, 0, 0]) == pytest.approx(1.0)
+    assert kappa([1, 1, 0, 0], [0, 0, 1, 1]) == pytest.approx(-1.0)
+    # acuerdo observado 0,70; esperado 0,54 -> kappa = (0,70 - 0,54) / 0,46 = 0,348
+    a = [1] * 25 + [1] * 10 + [0] * 5 + [0] * 10
+    b = [1] * 25 + [0] * 10 + [1] * 5 + [0] * 10
+    assert kappa(a, b) == pytest.approx(0.348, abs=0.001)
+
+
+def test_tamano_del_efecto_de_wilcoxon_con_diferencias_nulas():
+    import numpy as np
+    from analisis_adicional import wilcoxon
+
+    rng = np.random.default_rng(0)
+    a = rng.normal(0.3, 0.2, 100)
+    b = a - rng.normal(0.1, 0.1, 100)
+    b[:35] = a[:35]  # 35 diferencias nulas: el tamaño del efecto no debe inflarse
+    r = wilcoxon(a, b)
+    assert 0 <= r["r"] < 0.6
+    assert r["p"] < 0.05
+
+
+def test_idioma_de_las_figuras():
+    import idioma
+
+    assert idioma.dec("0.93") in ("0,93", "0.93")
+    assert idioma.miles(7207) in ("7 207", "7,207")
+    assert idioma.T("Lenguaje natural") in ("Lenguaje natural", "Natural language")
+
+
+def test_matriz_de_controles_si_existe():
+    ruta = config.RESULTADOS_DIR / "matriz_rendimiento_controles.csv"
+    if not ruta.exists():
+        pytest.skip("sin controles")
+    import pandas as pd
+
+    c = pd.read_csv(ruta)
+    assert set(c["arquitectura"]) == {"Qwen_RAG_congelado", "Qwen_base_sin_RAG"}
+    assert len(c) == 400
+    assert c["faithfulness_media"].between(0, 1).all() and c["answer_correctness_media"].between(0, 1).all()

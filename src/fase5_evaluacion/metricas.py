@@ -156,6 +156,30 @@ def answer_relevance(pregunta_original: str, respuesta: str, cliente, n: int = 3
     }
 
 
+PROMPT_ABSTENCION = """Una persona le hizo una pregunta a un asistente que solo podía responder con un contexto recuperado de la documentación. Clasifica la respuesta del asistente según si declara que el contexto NO contiene la información necesaria:
+- "total": dice que no tiene la información pedida o que el contexto no la contiene, y no entrega el dato que se pidió.
+- "parcial": entrega una parte, pero dice de forma explícita que falta información importante para responder completamente.
+- "ninguna": responde sin declarar que falte información (una nota final sobre detalles que el contexto no menciona, que no afecta lo pedido, cuenta como "ninguna").
+
+Pregunta: {pregunta}
+
+Respuesta del asistente:
+\"\"\"
+{respuesta}
+\"\"\"
+
+Responde SOLO con JSON: {{"abstencion": "total" | "parcial" | "ninguna"}}"""
+
+
+def abstencion(pregunta: str, respuesta: str, cliente) -> str:
+    """Clasifica si la respuesta declara falta de información: "total", "parcial" o "ninguna"."""
+    if not respuesta or not respuesta.strip():
+        return "total"
+    d = _llamar_json(cliente, PROMPT_ABSTENCION.format(pregunta=pregunta, respuesta=respuesta), max_tokens=256)
+    valor = d.get("abstencion") if isinstance(d, dict) else None
+    return valor if valor in ("total", "parcial", "ninguna") else "ninguna"
+
+
 def evaluar_respuesta(pregunta: str, respuesta: str, referencia: str, contexto: str, cliente) -> dict:
     """Calcula las tres métricas para una sola respuesta (una arquitectura, un caso)."""
     return {

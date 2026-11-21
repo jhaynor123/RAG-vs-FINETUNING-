@@ -12,7 +12,9 @@ Uso:
     python src/interfaz_validacion/consolidar_validacion.py --interacciones otro.jsonl --parte-a otro_a.jsonl
 """
 import argparse
+import difflib
 import json
+import re
 import statistics
 import sys
 from collections import defaultdict
@@ -91,6 +93,27 @@ def estadistica(inter: list[dict], parte_a: list[dict]) -> dict:
     return out
 
 
+def exportar_sin_texto(inter: list[dict]) -> Path | None:
+    """Escribe interacciones_sin_texto.jsonl: el registro sin la pregunta ni el texto de las respuestas (que citan
+    la documentación de la planta) y con el caso_id del caso de prueba al que corresponde cada consulta, para poder
+    cruzar la valoración de los participantes con los puntajes del juez."""
+    ruta_casos = config.DATA_PROCESSED / "resultados_respuestas.jsonl"
+    if not ruta_casos.exists():
+        return None
+    norm = lambda t: re.sub(r"\W+", " ", t.lower()).strip()
+    caso_de = {norm(c["pregunta"]): c["caso_id"] for c in map(json.loads, open(ruta_casos, encoding="utf-8"))}
+    salida = ORIGEN / "interacciones_sin_texto.jsonl"
+    with open(salida, "w", encoding="utf-8") as f:
+        for i in inter:
+            n = norm(i["pregunta"])
+            cercano = difflib.get_close_matches(n, list(caso_de), n=1, cutoff=0.9)
+            d = {k: v for k, v in i.items() if k != "pregunta"}
+            d["caso_id"] = caso_de.get(n) or (caso_de[cercano[0]] if cercano else None)
+            d["respuestas"] = [{k: v for k, v in r.items() if k != "texto"} for r in i["respuestas"]]
+            f.write(json.dumps(d, ensure_ascii=False) + "\n")
+    return salida
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--interacciones", type=Path, default=ORIGEN / "interacciones.jsonl")
@@ -148,6 +171,9 @@ def main():
     DESTINO.mkdir(exist_ok=True)
     json.dump(resumen, open(DESTINO / "resumen_real.json", "w", encoding="utf-8"), indent=2, ensure_ascii=False)
     print(json.dumps(resumen, indent=1, ensure_ascii=False))
+
+    if args.interacciones == ORIGEN / "interacciones.jsonl":
+        print("guardado:", exportar_sin_texto(inter))
 
     if len(parte_a) >= 3:
         est = estadistica(inter, parte_a)
