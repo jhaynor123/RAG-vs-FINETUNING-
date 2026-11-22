@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "Si usa este software, cítelo con estos datos."
+title: "Código y resultados de RAG frente a ajuste fino con registros semiestructurados y manuales técnicos de una planta textil"
+type: software
+version: "1.0.0"
+date-released: "2026-11-21"
+repository-code: "https://github.com/jhaynor123/RAG-vs-FINETUNING-"
+authors:
+  - family-names: "Cano Ramos"
+    given-names: "Jean Pool"
+    affiliation: "Universidad Tecnológica del Perú"
+  - family-names: "Garfias Sánchez"
+    given-names: "Jhaynor Styffe"
+    affiliation: "Universidad Tecnológica del Perú"
+keywords:
+  - retrieval-augmented generation
+  - fine-tuning
+  - large language models
+  - textile manufacturing
