@@ -24,6 +24,7 @@ from pathlib import Path
 import numpy as np
 from scipy import stats
 from statsmodels.stats.contingency_tables import cochrans_q, mcnemar
+from statsmodels.stats.multitest import multipletests
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 sys.path.insert(0, str(Path(__file__).parent.parent / "fase5_evaluacion"))
@@ -75,6 +76,32 @@ def estadistica(inter: list[dict], parte_a: list[dict]) -> dict:
         solo_ft = int(((m[:, 3] == 1) & (m[:, j] == 0)).sum())
         solo_rag = int(((m[:, 3] == 0) & (m[:, j] == 1)).sum())
         out["coincide"][f"discordantes_FTvs_{c}"] = (solo_ft, solo_rag, float(mcnemar([[0, solo_ft], [solo_rag, 0]], exact=True).pvalue))
+    # tres comparaciones del modelo ajustado con cada modelo de RAG: se corrige por Holm
+    claves = [f"discordantes_FTvs_{c}" for c in cfgs[:3]]
+    ajustados = multipletests([out["coincide"][k][2] for k in claves], method="holm")[1]
+    for k, p_aj in zip(claves, ajustados):
+        out["coincide"][k] = (*out["coincide"][k][:3], float(p_aj))
+    # sensibilidad a la agrupación por persona: se repite la comparación dejando fuera a cada participante
+    personas = np.array([i["participante"] for i in inter])
+    out["coincide_sin_participante"] = {}
+    for pers in sorted(set(personas)):
+        mm = m[personas != pers]
+        fila = {}
+        for j, c in enumerate(cfgs[:3]):
+            solo_ft = int(((mm[:, 3] == 1) & (mm[:, j] == 0)).sum())
+            solo_rag = int(((mm[:, 3] == 0) & (mm[:, j] == 1)).sum())
+            fila[c] = (solo_ft, solo_rag, float(mcnemar([[0, solo_ft], [solo_rag, 0]], exact=True).pvalue))
+        out["coincide_sin_participante"][pers] = fila
+    # y dejando fuera a los dos participantes en los que se concentró la diferencia
+    por_persona = {pers: (m[personas == pers, 3].mean()) for pers in sorted(set(personas))}
+    peores = sorted(por_persona, key=por_persona.get)[:2]
+    mm = m[~np.isin(personas, peores)]
+    fila = {}
+    for j, c in enumerate(cfgs[:3]):
+        solo_ft = int(((mm[:, 3] == 1) & (mm[:, j] == 0)).sum())
+        solo_rag = int(((mm[:, 3] == 0) & (mm[:, j] == 1)).sum())
+        fila[c] = (solo_ft, solo_rag, float(mcnemar([[0, solo_ft], [solo_rag, 0]], exact=True).pvalue))
+    out["coincide_sin_dos_peores"] = {"excluidos": peores, "n": int(len(mm)), "prop_FT": round(float(mm[:, 3].mean()), 3), "contrastes": fila}
 
     conteo = [sum(i["config_preferida"] == c for i in inter) for c in cfgs]
     chi2, p = stats.chisquare(conteo)
