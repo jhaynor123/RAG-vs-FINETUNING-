@@ -37,7 +37,6 @@ TEXTOS = {
              "Matriz de rendimiento\ny aceptación", "Mide el desempeño y la utilidad percibida"),
         ],
         "salida": "SALIDA",
-        "retro": "Retroalimentación del diseño: segmentación, top-k e hiperparámetros",
         "capas": ["Capa 1", "Capa 2", "Capa 3", "Capa 5"],
         "capa_nombres": ["Repositorios\ndocumentales", "Preprocesamiento", "Orquestación", "Evaluación externa"],
         "capa_detalle": ["manuales y registros", "Unstructured.io · 512 tokens", "LlamaIndex", "Juez DeepSeek"],
@@ -63,7 +62,6 @@ TEXTOS = {
              "Performance matrix\nand acceptance", "Measures performance and perceived usefulness"),
         ],
         "salida": "OUTPUT",
-        "retro": "Design feedback: chunking, top-k and hyperparameters",
         "capas": ["Layer 1", "Layer 2", "Layer 3", "Layer 5"],
         "capa_nombres": ["Document\nrepositories", "Preprocessing", "Orchestration", "External evaluation"],
         "capa_detalle": ["manuals and records", "Unstructured.io · 512 tokens", "LlamaIndex", "DeepSeek judge"],
@@ -112,11 +110,6 @@ def fig1(idioma: str):
         ax.text(x1, y - 0.18, proposito, fontsize=8.8, style="italic", color="#5b6270", va="center")
         if i < 4:
             flecha(ax, (xf + wf / 2, y - 0.03), (xf + wf / 2, y - paso + alto + 0.03), lw=1.6)
-    ytop, ybot = 8.4 - 0.2 - alto / 2, 8.4 - 0.2 - alto - 4 * paso + alto / 2
-    xr = xo + wo + 0.35
-    ax.plot([xo + wo + 0.03, xr, xr], [ybot, ybot, ytop], color=GRIS, lw=1.6, ls="--")
-    flecha(ax, (xr, ytop), (xo + wo + 0.03, ytop), color=GRIS, lw=1.6, ls="--")
-    ax.text(xr + 0.3, (ytop + ybot) / 2, t["retro"], rotation=90, fontsize=9, style="italic", color="#5b6270", ha="center", va="center")
     fig.savefig(DEST / f"fig1_diseno_{idioma}.png", dpi=200, bbox_inches="tight", facecolor="white")
     plt.close(fig)
 
